@@ -1,9 +1,20 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import Dashboard from "./__component/Dashboard";
 type Menu = "DASHBOARD" | "PUMP SETUP" | "PRESET SETUP" | "SOLENOID";
 export default function Home() {
   const [currentMenu, setCurrentMenu] = useState("DASHBOARD");
+  const renderTab = useMemo(() => {
+    switch (currentMenu) {
+      case "DASHBOARD":
+        return <Dashboard />;
+        break;
+
+      default:
+        break;
+    }
+  }, [currentMenu]);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-white">
       <div className=" w-full h-[120px] bg-[#1867C0] flex px-[7.5rem] items-center ">
@@ -38,6 +49,7 @@ export default function Home() {
           )}
         </div>
       </div>
+      <div className=" flex flex-col w-full flex-1 pt-7 tracking-wide-[.32rem]">{renderTab}</div>
     </main>
   );
 }
