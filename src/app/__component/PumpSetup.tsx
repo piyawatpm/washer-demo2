@@ -39,7 +39,7 @@ const PumpSetup = () => {
                     <h2 className=" text-[#868686] text-[2rem] font-black">
                       320
                     </h2>
-                    <p className="  text-[.8rem] font-bold">Numbers of Turns</p>
+                    <p className="  text-[.8rem] font-bold">Steps per ml.</p>
                   </div>
                   <div className=" flex flex-col gap-y-1 items-center">
                     <h2 className=" text-[#868686] text-[2rem] font-black">
