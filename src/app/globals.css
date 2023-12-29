@@ -21,3 +21,18 @@ body{
   line-height: normal;
   letter-spacing: 0.32rem;
 }
+@keyframes flash {
+  0% {
+    color: black;
+  }
+  50% {
+    color: white;
+  }
+  100% {
+    color: black;
+  }
+}
+
+.flashing-text {
+  animation: flash 1s infinite;
+}

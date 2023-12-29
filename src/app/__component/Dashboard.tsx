@@ -71,11 +71,11 @@ const Dashboard = () => {
         <div className=" flex gap-x-4">
           <div className=" w-[7.2rem]  h-[7.2rem] flex items-center justify-center p-4 bg-[#F5F5F5] rounded-full">
             <div className=" w-full h-full bg-[#06DE1C] rounded-full text-base font-bold flex items-center justify-center">
-              <p>START</p>
+              <p className="flashing-text">START</p>
             </div>
           </div>
           <div className=" w-[7.2rem]  h-[7.2rem] flex items-center justify-center p-4 bg-[#F5F5F5] rounded-full">
-            <div className=" w-full h-full bg-[#F00] rounded-full text-base font-bold flex items-center justify-center">
+            <div className=" w-full h-full bg-[#F00] text-white text-opacity-50 rounded-full text-base font-bold flex items-center justify-center">
               <p>END</p>
             </div>
           </div>
@@ -103,7 +103,7 @@ const Dashboard = () => {
                   <div className=" flex-1 flex items-center justify-center">
                     {mockPumpStatus.includes(index + 1) ? (
                       <Image
-                        className=""
+                        className=" animate-spin"
                         src="/pump.png"
                         alt="pump"
                         width={71}
