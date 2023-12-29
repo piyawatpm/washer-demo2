@@ -12,7 +12,7 @@ const PumpSetup = () => {
               <div className="  py-2 w-[10rem] font-bold rounded-[.25rem] bg-[#F5F5F5] text-black flex items-center justify-center">
                 INPUT {i + 1}
               </div>
-              <div className=" cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] bg-[#F5F5F5] text-black flex items-center justify-center">
+              <div className=" cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary text-black flex items-center justify-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className=" w-[1.2rem] h-[1.2rem]"

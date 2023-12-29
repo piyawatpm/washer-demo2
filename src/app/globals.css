@@ -36,3 +36,9 @@ body{
 .flashing-text {
   animation: flash 1s infinite;
 }
+.button-primary{
+border-radius: 0.25rem;
+background: #F5F5F5;
+box-shadow: 2px 3px 4px 0px rgba(0, 0, 0, 0.15);
+
+}
