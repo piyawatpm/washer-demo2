@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import Dashboard from "./__component/Dashboard";
 import PumpSetup from "./__component/PumpSetup";
+import Solenoid from "./__component/Solenoid";
 type Menu = "DASHBOARD" | "PUMP SETUP" | "PRESET SETUP" | "SOLENOID";
 export default function Home() {
   const [currentMenu, setCurrentMenu] = useState("DASHBOARD");
@@ -12,7 +13,8 @@ export default function Home() {
         return <Dashboard />;
       case "PUMP SETUP":
         return <PumpSetup />;
-
+      case "SOLENOID":
+        return <Solenoid />;
       default:
         break;
     }
