@@ -23,6 +23,18 @@ const Dashboard = () => {
             );
           })}
         </div>
+        <div className=" flex gap-x-4">
+          <div className=" w-[7.2rem]  h-[7.2rem] flex items-center justify-center p-4 bg-[#F5F5F5] rounded-full">
+            <div className=" w-full h-full bg-[#06DE1C] rounded-full text-base font-bold flex items-center justify-center">
+              <p>START</p>
+            </div>
+          </div>
+          <div className=" w-[7.2rem]  h-[7.2rem] flex items-center justify-center p-4 bg-[#F5F5F5] rounded-full">
+            <div className=" w-full h-full bg-[#F00] rounded-full text-base font-bold flex items-center justify-center">
+              <p>END</p>
+            </div>
+          </div>
+        </div>
       </div>
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className=" text-[1.6rem] font-bold text-black">PUMP STATUS</h1>
