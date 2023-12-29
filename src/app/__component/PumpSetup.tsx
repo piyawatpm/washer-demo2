@@ -1,9 +1,85 @@
 import Image from "next/image";
-import { Switch } from "antd";
+import { Switch, Modal } from "antd";
+import { useState } from "react";
 
 const PumpSetup = () => {
+  const [isModalOpen, setIsModalOpen] = useState(true);
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
   return (
     <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[2rem]">
+      <Modal
+        title=""
+        open={isModalOpen}
+        // onOk={handleOk}
+        closeIcon={null}
+        // style={{ backgroundColor: 'transparent' }}
+        centered
+        footer={null}
+        // onCancel={handleCancel}
+        className=" !w-[75rem] !"
+        closable={false}
+        onCancel={handleCloseModal}
+        bodyStyle={{ height: "100%" }}
+      >
+        <div className=" flex h-full w-full flex-col items-center justify-center  gap-y-[1.35rem]  ">
+          <div className=" text-[1.4rem] font-black  ">OUTPUT 1</div>
+          <div className=" w-full flex items-center text-base font-bold px-[7.3rem]">
+            <div className=" flex flex-col gap-y-2 w-2/5 pl-2">
+              <p>Name</p>
+              <input
+                type="text"
+                value={"DETERGENT"}
+                className=" w-full pl-[1.65rem] py-4 bg-[#D9D9D9]"
+              />
+            </div>
+            <div className=" w-3/5 flex items-center gap-x-4 pl-2">
+              <div className=" flex flex-col gap-y-2 w-2/5">
+                <p>STEP PER SECOND</p>
+                <input
+                  type="text"
+                  value={"DETERGENT"}
+                  className=" w-full pl-[1.65rem] py-4 bg-[#D9D9D9]"
+                />
+              </div>
+              <div className=" flex flex-col gap-y-2 w-2/5">
+                <p>STEP PER ML</p>
+                <input
+                  type="text"
+                  value={"DETERGENT"}
+                  className=" w-full pl-[1.65rem] py-4 bg-[#D9D9D9]"
+                />
+              </div>
+              <div className=" flex flex-col gap-y-2 w-2/5">
+                <p>ML PER KG</p>
+                <input
+                  type="text"
+                  value={"DETERGENT"}
+                  className=" w-full pl-[1.65rem] py-4 bg-[#D9D9D9]"
+                />
+              </div>
+            </div>
+          </div>
+          <div className=" flex items-center text-[1.4rem] font-bold text-white w-full justify-center gap-x-[9rem] mt-[2.45rem]">
+            <button
+              onClick={handleCloseModal}
+              className=" w-[8rem] h-[3.2rem] bg-black "
+            >
+              CANCEL
+            </button>
+            <button
+              onClick={handleCloseModal}
+              className=" w-[8rem] h-[3.2rem] bg-black "
+            >
+              OK
+            </button>
+          </div>
+        </div>
+      </Modal>
       <h1 className="heading">PUMP</h1>
       <div className=" flex w-full items-center justify-between">
         {[1, 2, 3, 4, 5, 6].map((e, i) => {
@@ -12,7 +88,10 @@ const PumpSetup = () => {
               <div className="  py-2 w-[10rem] font-bold rounded-[.25rem] bg-[#F5F5F5] text-black flex items-center justify-center">
                 INPUT {i + 1}
               </div>
-              <div className=" cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary text-black flex items-center justify-center">
+              <button
+                onClick={handleOpenModal}
+                className=" cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary text-black flex items-center justify-center"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className=" w-[1.2rem] h-[1.2rem]"
@@ -25,7 +104,7 @@ const PumpSetup = () => {
                   />
                 </svg>
                 <p>Edit</p>
-              </div>
+              </button>
               <div className=" flex-1 flex flex-col items-center bg-[#F5F5F5] w-full rounded-[.25rem] pt-[.85rem] pb-[1.85rem]">
                 <h1 className=" text-[1.2rem] font-black">OUTPUT {i}</h1>
                 <div className=" mt-[1.35rem] flex flex-col gap-y-[1.35rem]">
