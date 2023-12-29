@@ -14,7 +14,7 @@ const Solenoid = () => {
               <input className=" w-[10rem] h-[3.7rem] border px-4 border-black"></input>
             </div>
             <div className=" flex items-center gap-x-[1.65rem]">
-              <p className=" text-[1.2rem] font-black">First Trigger Time</p>
+              <p className=" text-[1.2rem] font-black">Second Trigger Time</p>
               <input className=" w-[10rem] h-[3.7rem] border px-4 border-black"></input>
             </div>
             <Switch defaultChecked />
@@ -28,7 +28,7 @@ const Solenoid = () => {
               <input className=" w-[10rem] h-[3.7rem] border px-4 border-black"></input>
             </div>
             <div className=" flex items-center gap-x-[1.65rem]">
-              <p className=" text-[1.2rem] font-black">First Trigger Time</p>
+              <p className=" text-[1.2rem] font-black">Second Trigger Time</p>
               <input className=" w-[10rem] h-[3.7rem] border px-4 border-black"></input>
             </div>
             <Switch defaultChecked />
