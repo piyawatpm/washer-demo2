@@ -3,8 +3,8 @@ import { Switch } from "antd";
 
 const PumpSetup = () => {
   return (
-    <div className=" w-full h-[1000px] px-[6.6rem] flex flex-col text-base gap-y-[2rem]">
-      <h1 className=" text-[1.6rem] font-bold text-black">PUMP</h1>
+    <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[2rem]">
+      <h1 className="heading">PUMP</h1>
       <div className=" flex w-full items-center justify-between">
         {[1, 2, 3, 4, 5, 6].map((e, i) => {
           return (

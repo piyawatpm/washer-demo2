@@ -1,9 +1,9 @@
 import Image from "next/image";
 const Dashboard = () => {
   return (
-    <div className=" w-full h-[1000px] px-[6.6rem] flex flex-col text-base gap-y-[4.75rem]">
+    <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[4.75rem]">
       <div className=" flex flex-col gap-y-[.85rem]">
-        <h1 className=" text-[1.6rem] font-bold text-black">INPUT STATUS</h1>
+        <h1 className=" heading">INPUT STATUS</h1>
         <div className=" flex gap-x-2">
           {[
             "Detergent",
@@ -37,7 +37,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className=" flex flex-col gap-y-[.85rem]">
-        <h1 className=" text-[1.6rem] font-bold text-black">PUMP STATUS</h1>
+        <h1 className="heading">PUMP STATUS</h1>
         <div className=" flex gap-x-2">
           {["PUMP 1", "PUMP 2", "PUMP 3", "PUMP 4", "PUMP 5", "PUMP 6"].map(
             (e, index) => {
@@ -64,7 +64,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className=" flex flex-col gap-y-[.85rem]">
-        <h1 className=" text-[1.6rem] font-bold text-black">FLUID LEVEL</h1>
+        <h1 className="heading">FLUID LEVEL</h1>
         <div className=" flex gap-x-2">
           {["PUMP 1", "PUMP 2", "PUMP 3", "PUMP 4", "PUMP 5", "PUMP 6"].map(
             (e, index) => {
@@ -84,7 +84,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className=" flex flex-col gap-y-[.85rem]">
-        <h1 className=" text-[1.6rem] font-bold text-black">WASH CYCLE</h1>
+        <h1 className=" heading">WASH CYCLE</h1>
         <div className=" flex gap-x-2">
           {[
             { tpye: "daily", value: 6 },

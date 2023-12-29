@@ -20,8 +20,8 @@ export default function Home() {
     }
   }, [currentMenu]);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-white">
-      <div className=" w-full h-[120px] bg-[#1867C0] flex px-[7.5rem] items-center ">
+    <main className="flex min-h-screen flex-col items-center justify-between bg-white ">
+      <div className=" w-full h-[120px] bg-[#1867C0] flex  items-center px-[7.5rem]">
         <Image
           className=""
           src="/logo.png"
@@ -59,7 +59,7 @@ export default function Home() {
           )}
         </div>
       </div>
-      <div className=" flex flex-col w-full flex-1 pt-7 tracking-wide-[.32rem]">
+      <div className=" flex flex-col w-full flex-1 pt-7 tracking-wide-[.32rem] px-[7.5rem]">
         {renderTab}
       </div>
     </main>

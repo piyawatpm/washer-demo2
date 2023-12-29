@@ -3,8 +3,8 @@ import { Switch } from "antd";
 
 const Solenoid = () => {
   return (
-    <div className=" w-full h-[1000px] px-[6.6rem] flex flex-col text-base gap-y-[2rem]">
-      <h1 className=" text-[1.6rem] font-bold text-black">SOLENOID</h1>
+    <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[2rem]">
+      <h1 className="heading">SOLENOID</h1>
       <div className=" flex flex-col gap-y-16">
         <div className=" w-full flex items-center bg-[#F5F5F5] py-[1.65rem] px-[3.25rem]">
           <h1 className=" text-[2rem] text-[#868686] font-black ">Flush</h1>
