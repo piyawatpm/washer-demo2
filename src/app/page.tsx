@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import Dashboard from "./__component/Dashboard";
+import PumpSetup from "./__component/PumpSetup";
 type Menu = "DASHBOARD" | "PUMP SETUP" | "PRESET SETUP" | "SOLENOID";
 export default function Home() {
   const [currentMenu, setCurrentMenu] = useState("DASHBOARD");
@@ -9,7 +10,8 @@ export default function Home() {
     switch (currentMenu) {
       case "DASHBOARD":
         return <Dashboard />;
-        break;
+      case "PUMP SETUP":
+        return <PumpSetup />;
 
       default:
         break;
@@ -49,7 +51,9 @@ export default function Home() {
           )}
         </div>
       </div>
-      <div className=" flex flex-col w-full flex-1 pt-7 tracking-wide-[.32rem]">{renderTab}</div>
+      <div className=" flex flex-col w-full flex-1 pt-7 tracking-wide-[.32rem]">
+        {renderTab}
+      </div>
     </main>
   );
 }
