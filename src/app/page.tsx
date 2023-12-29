@@ -42,11 +42,17 @@ export default function Home() {
                     setCurrentMenu(e);
                   }}
                   key={index}
-                  className={` text-[1.15rem] font-bold cursor-pointer text-white ${
+                  className={` flex flex-col text-[1.15rem] font-bold cursor-pointer text-white ${
                     currentMenu !== e && "opacity-50"
                   }`}
                 >
-                  {e}
+                  <p>{e}</p>
+
+                  <div
+                    className={`w-full h-[.45rem] bg-white transition-all ${
+                      currentMenu !== e && "opacity-0"
+                    }`}
+                  />
                 </div>
               );
             }
