@@ -4,13 +4,21 @@ import { useMemo, useState } from "react";
 import Dashboard from "./__component/Dashboard";
 import PumpSetup from "./__component/PumpSetup";
 import Solenoid from "./__component/Solenoid";
-type Menu = "DASHBOARD" | "PUMP SETUP" | "PRESET SETUP" | "SOLENOID";
+import InputSetUp from "./__component/InputSetup";
+type Menu =
+  | "DASHBOARD"
+  | "PUMP SETUP"
+  | "PRESET SETUP"
+  | "SOLENOID"
+  | "INPUT SETUP";
 export default function Home() {
-  const [currentMenu, setCurrentMenu] = useState("DASHBOARD");
+  const [currentMenu, setCurrentMenu] = useState<Menu>("DASHBOARD");
   const renderTab = useMemo(() => {
     switch (currentMenu) {
       case "DASHBOARD":
         return <Dashboard />;
+      case "INPUT SETUP":
+        return <InputSetUp />;
       case "PUMP SETUP":
         return <PumpSetup />;
       case "SOLENOID":
@@ -21,7 +29,7 @@ export default function Home() {
   }, [currentMenu]);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-white ">
-      <div className=" w-full h-[120px] bg-[#1867C0] flex  items-center px-[7.5rem]">
+      <div className=" w-full h-[120px] bg-[#1867C0] flex  items-center px-[5.5rem]">
         <div className=" flex items-center gap-x-3">
           <Image
             className=""
@@ -35,33 +43,37 @@ export default function Home() {
             WASHER MATE
           </p>
         </div>
-        <div className=" flex ml-auto gap-x-[70px] items-center">
-          {["DASHBOARD", "PUMP SETUP", "PRESET SETUP", "SOLENOID"].map(
-            (e, index) => {
-              return (
-                <div
-                  onClick={() => {
-                    setCurrentMenu(e);
-                  }}
-                  key={index}
-                  className={` flex flex-col text-[1.15rem] font-bold cursor-pointer text-white ${
-                    currentMenu !== e && "opacity-50"
-                  }`}
-                >
-                  <p>{e}</p>
+        <div className=" flex ml-auto gap-x-[30px] items-center">
+          {[
+            "DASHBOARD",
+            "INPUT SETUP",
+            "PUMP SETUP",
+            "PRESET SETUP",
+            "SOLENOID",
+          ].map((e, index) => {
+            return (
+              <div
+                onClick={() => {
+                  setCurrentMenu(e as Menu);
+                }}
+                key={index}
+                className={` flex flex-col text-[1.15rem] font-bold cursor-pointer text-white ${
+                  currentMenu !== e && "opacity-50"
+                }`}
+              >
+                <p>{e}</p>
 
-                  <div
-                    className={`w-full h-[.45rem] bg-white transition-all ${
-                      currentMenu !== e && "opacity-0"
-                    }`}
-                  />
-                </div>
-              );
-            }
-          )}
+                <div
+                  className={`w-full h-[.45rem] bg-white transition-all ${
+                    currentMenu !== e && "opacity-0"
+                  }`}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
-      <div className=" flex flex-col w-full flex-1 pt-7 tracking-wide-[.32rem] px-[7.5rem]">
+      <div className=" flex flex-col w-full flex-1 pt-7 tracking-wide-[.32rem] px-[5.5rem]">
         {renderTab}
       </div>
     </main>
