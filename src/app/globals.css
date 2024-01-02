@@ -42,3 +42,17 @@ background: #F5F5F5;
 box-shadow: 2px 3px 4px 0px rgba(0, 0, 0, 0.15);
 
 }
+.ant-select-selector{
+  background-color: #F5F5F5 !important;
+  border: none !important;
+
+}
+.ant-select-selection-item{
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+}
+.ant-select-item{
+  font-weight: 700 !important;
+  font-size: 1rem !important;
+
+}

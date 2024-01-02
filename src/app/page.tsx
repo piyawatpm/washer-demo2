@@ -22,17 +22,19 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between bg-white ">
       <div className=" w-full h-[120px] bg-[#1867C0] flex  items-center px-[7.5rem]">
-        <Image
-          className=""
-          src="/logo.png"
-          alt="Next.js Logo"
-          width={244}
-          height={67}
-          priority
-        />
-        <p className=" text-[1.2rem] text-white font-normal mx-auto">
-          WASHER MATE
-        </p>
+        <div className=" flex items-center gap-x-3">
+          <Image
+            className=""
+            src="/logo.png"
+            alt="Next.js Logo"
+            width={244}
+            height={67}
+            priority
+          />
+          <p className=" text-[1.2rem] text-white font-normal mx-auto">
+            WASHER MATE
+          </p>
+        </div>
         <div className=" flex ml-auto gap-x-[70px] items-center">
           {["DASHBOARD", "PUMP SETUP", "PRESET SETUP", "SOLENOID"].map(
             (e, index) => {

@@ -1,14 +1,25 @@
 import Image from "next/image";
-import { Switch, Modal } from "antd";
+import { Switch, Modal, Select } from "antd";
 import { useState } from "react";
 
 const PumpSetup = () => {
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
   const handleOpenModal = () => {
     setIsModalOpen(true);
+  };
+  const filterOption = (
+    input: string,
+    option?: { label: string; value: string }
+  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+  const onChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
+
+  const onSearch = (value: string) => {
+    console.log("search:", value);
   };
   return (
     <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[2rem]">
@@ -81,13 +92,25 @@ const PumpSetup = () => {
         </div>
       </Modal>
       <h1 className="heading">PUMP</h1>
-      <div className=" flex w-full items-center justify-between">
+      <div className=" flex w-full items-center justify-between max-w-screen-xl">
         {[1, 2, 3, 4, 5, 6].map((e, i) => {
           return (
             <div key={i} className=" h-[600px] flex flex-col gap-y-2">
-              <div className="  py-2 w-[10rem] font-bold rounded-[.25rem] bg-[#F5F5F5] text-black flex items-center justify-center">
-                INPUT {i + 1}
-              </div>
+              <Select
+                className=" !w-full !font-bold rounded-[.25rem] !bg-[#F5F5F5] text-black flex items-center justify-center"
+                defaultValue="DETERGENT"
+                style={{ width: 120 }}
+                onChange={onChange}
+                showSearch
+                onSearch={onSearch}
+                filterOption={filterOption}
+                options={[
+                  { value: "DETERGENT", label: "DETERGENT" },
+                  { value: "SOFTENER", label: "SOFTENER" },
+                  { value: "COLORBLEACH", label: "COLOR BLEACH" },
+                ]}
+              />
+
               <button
                 onClick={handleOpenModal}
                 className=" cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary text-black flex items-center justify-center"
@@ -122,7 +145,7 @@ const PumpSetup = () => {
                   </div>
                   <div className=" flex flex-col gap-y-1 items-center">
                     <h2 className=" text-[#868686] text-[2rem] font-black">
-                      320
+                      1
                     </h2>
                     <p className="  text-[.8rem] font-bold">ml per kg</p>
                   </div>
