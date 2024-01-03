@@ -62,12 +62,12 @@ const PresetSetup = () => {
                     <p>Edit</p>
                   </button>
                 </div>
-                <div className=" flex gap-x-2">
+                <div className=" flex gap-x-2 overflow-scroll px-5">
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e, i) => {
                     return (
                       <div
                         key={i}
-                        className=" text-[1.2rem] font-black flex flex-col items-center justify-center gap-y-4"
+                        className="  text-[1rem] font-black flex flex-col items-center justify-center gap-y-4"
                       >
                         <div className=" flex flex-col items-center justify-center gap-y-1">
                           <p>SEQUENCE {e}</p>
