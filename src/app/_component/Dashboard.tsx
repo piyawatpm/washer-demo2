@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { Key, useState } from "react";
 import { useStatus } from "../_swr/useStatus";
 
 type WasherStep =
@@ -49,7 +49,7 @@ const Dashboard = () => {
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className=" heading">INPUT STATUS</h1>
         <div className=" flex gap-x-2">
-          {data?.inputStatus.map((e, index) => {
+          {data?.inputStatus.map((e: { status: string; inputName: string}, index: Key) => {
             return (
               <div
                 key={index}
@@ -88,7 +88,7 @@ const Dashboard = () => {
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className="heading">PUMP STATUS</h1>
         <div className=" flex gap-x-2">
-          {data?.pumpStatus.map((e, index) => {
+          {data?.pumpStatus.map((e: { status: string; pumpName: string}, index: Key) => {
             return (
               <div
                 key={index}
@@ -125,7 +125,7 @@ const Dashboard = () => {
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className="heading">FLUID LEVEL</h1>
         <div className=" flex gap-x-2">
-          {data?.fluidLevel.map((e, index) => {
+          {data?.fluidLevel.map((e: { status: string; pumpName: string}, index: Key) => {
             return (
               <div
                 key={index}
