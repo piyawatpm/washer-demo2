@@ -2,7 +2,7 @@ import axios from "axios";
 import useSWR from "swr";
 
 export function useStatus() {
-  const fetcher = async (url: string) => {
+  const getMockData = async (url: string) => {
     return {
       status: "start",
       inputStatus: [
@@ -108,6 +108,17 @@ export function useStatus() {
       },
     };
   };
+
+  const fetcher = async (url: string) => {
+    return axios.get(url)
+      .then((res) => res.data)
+      .catch((error) => {
+        return getMockData(url);
+      });
+  };
+
   console.log("call");
-  return useSWR("/api/status", fetcher);
+  return useSWR("/api/v1/status", fetcher, {
+    refreshInterval: 1000
+  });
 }
