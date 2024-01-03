@@ -1,11 +1,11 @@
 "use client";
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import Dashboard from "./__component/Dashboard";
-import PumpSetup from "./__component/PumpSetup";
-import Solenoid from "./__component/Solenoid";
-import InputSetUp from "./__component/InputSetup";
-import PresetSetup from "./__component/PresetSetuo";
+import Dashboard from "./_component/Dashboard";
+import PumpSetup from "./_component/PumpSetup";
+import Solenoid from "./_component/Solenoid";
+import InputSetUp from "./_component/InputSetup";
+import PresetSetup from "./_component/PresetSetuo";
 type Menu =
   | "DASHBOARD"
   | "PUMP SETUP"
