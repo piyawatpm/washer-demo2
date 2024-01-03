@@ -5,6 +5,7 @@ import Dashboard from "./__component/Dashboard";
 import PumpSetup from "./__component/PumpSetup";
 import Solenoid from "./__component/Solenoid";
 import InputSetUp from "./__component/InputSetup";
+import PresetSetup from "./__component/PresetSetuo";
 type Menu =
   | "DASHBOARD"
   | "PUMP SETUP"
@@ -21,6 +22,8 @@ export default function Home() {
         return <InputSetUp />;
       case "PUMP SETUP":
         return <PumpSetup />;
+      case "PRESET SETUP":
+        return <PresetSetup />;
       case "SOLENOID":
         return <Solenoid />;
       default:

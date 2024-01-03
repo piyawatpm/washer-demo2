@@ -40,12 +40,14 @@ body{
 border-radius: 0.25rem;
 background: #F5F5F5;
 box-shadow: 2px 3px 4px 0px rgba(0, 0, 0, 0.15);
-
+}
+.preset > .ant-select-selector{
+    border: black 1px solid !important;
+    border-radius: 0 !important;
 }
 .ant-select-selector{
   background-color: #F5F5F5 !important;
   border: none !important;
-
 }
 .ant-select-selection-item{
   font-weight: 700 !important;
