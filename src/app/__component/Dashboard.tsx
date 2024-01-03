@@ -149,6 +149,7 @@ const Dashboard = () => {
                   className={` py-2 w-[10rem] gap-y-2 text-black flex-col  font-bold rounded-[.25rem] bg-[#F5F5F5] flex items-center justify-center`}
                 >
                   <p className=" uppercase">{e.tpye}</p>
+                  {/* @ts-ignore */}
                   <p>{mockWashCycleData[e.tpye]}</p>
                 </div>
               );
