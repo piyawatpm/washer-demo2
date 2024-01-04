@@ -14,7 +14,7 @@ const PumpSetup = () => {
   const inputOption = useMemo(() => {
     if (data) {
       return data.map((pump) => {
-        return { value: pump.id, label: pump.inputName };
+        return { value: pump.pumpId, label: pump.inputName };
       });
     }
   }, [data]);
