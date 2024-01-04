@@ -1,12 +1,24 @@
 import Image from "next/image";
 import { Switch, Modal, Select } from "antd";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useStatus } from "../_swr/useStatus";
+import { usePump } from "../_swr/usePump";
 
 const PumpSetup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+  const { data } = usePump();
+
+  const inputOption = useMemo(() => {
+    if (data) {
+      return data.map((pump) => {
+        return { value: pump.id, label: pump.inputName };
+      });
+    }
+  }, [data]);
+  console.log("inputOption", inputOption);
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -39,42 +51,34 @@ const PumpSetup = () => {
       >
         <div className=" flex h-full w-full flex-col items-center justify-center  gap-y-[1.35rem]  ">
           <div className=" text-[1.4rem] font-black  ">OUTPUT 1</div>
-          <div className=" w-full flex items-center text-base font-bold px-[7.3rem]">
-            <div className=" flex flex-col gap-y-2 w-2/5 pl-2">
-              <p>Name</p>
+
+          <div className=" w-full flex items-center gap-x-4  text-base justify-center font-bold px-[7.3rem]">
+            <div className=" flex flex-col gap-y-2 w-2/5">
+              <p>STEP PER SECOND</p>
               <input
                 type="text"
-                value={"DETERGENT"}
+                value={"320"}
                 className=" w-full pl-[1.65rem] py-4 bg-[#D9D9D9]"
               />
             </div>
-            <div className=" w-3/5 flex items-center gap-x-4 pl-2">
-              <div className=" flex flex-col gap-y-2 w-2/5">
-                <p>STEP PER SECOND</p>
-                <input
-                  type="text"
-                  value={"DETERGENT"}
-                  className=" w-full pl-[1.65rem] py-4 bg-[#D9D9D9]"
-                />
-              </div>
-              <div className=" flex flex-col gap-y-2 w-2/5">
-                <p>STEP PER ML</p>
-                <input
-                  type="text"
-                  value={"DETERGENT"}
-                  className=" w-full pl-[1.65rem] py-4 bg-[#D9D9D9]"
-                />
-              </div>
-              <div className=" flex flex-col gap-y-2 w-2/5">
-                <p>ML PER KG</p>
-                <input
-                  type="text"
-                  value={"DETERGENT"}
-                  className=" w-full pl-[1.65rem] py-4 bg-[#D9D9D9]"
-                />
-              </div>
+            <div className=" flex flex-col gap-y-2 w-2/5">
+              <p>STEP PER ML</p>
+              <input
+                type="text"
+                value={"320"}
+                className=" w-full pl-[1.65rem] py-4 bg-[#D9D9D9]"
+              />
+            </div>
+            <div className=" flex flex-col gap-y-2 w-2/5">
+              <p>ML PER KG</p>
+              <input
+                type="text"
+                value={"1"}
+                className=" w-full pl-[1.65rem] py-4 bg-[#D9D9D9]"
+              />
             </div>
           </div>
+
           <div className=" flex items-center text-[1.4rem] font-bold text-white w-full justify-center gap-x-[9rem] mt-[2.45rem]">
             <button
               onClick={handleCloseModal}
@@ -93,22 +97,18 @@ const PumpSetup = () => {
       </Modal>
       <h1 className="heading">PUMP</h1>
       <div className=" flex w-full items-center justify-between max-w-screen-xl">
-        {[1, 2, 3, 4, 5, 6].map((e, i) => {
+        {data?.map((e, i) => {
           return (
             <div key={i} className=" h-[600px] flex flex-col gap-y-2">
               <Select
                 className=" !w-full !font-bold rounded-[.25rem] !bg-[#F5F5F5] text-black flex items-center justify-center"
-                defaultValue="DETERGENT"
+                defaultValue={e.inputName}
                 style={{ width: 120 }}
                 onChange={onChange}
                 showSearch
                 onSearch={onSearch}
                 filterOption={filterOption}
-                options={[
-                  { value: "DETERGENT", label: "DETERGENT" },
-                  { value: "SOFTENER", label: "SOFTENER" },
-                  { value: "COLORBLEACH", label: "COLOR BLEACH" },
-                ]}
+                options={inputOption}
               />
 
               <button
@@ -129,7 +129,9 @@ const PumpSetup = () => {
                 <p>Edit</p>
               </button>
               <div className=" flex-1 flex flex-col items-center bg-[#F5F5F5] w-full rounded-[.25rem] pt-[.85rem] pb-[1.85rem]">
-                <h1 className=" text-[1.2rem] font-black">PUMP {e}</h1>
+                <h1 className=" text-[1.2rem] font-black">
+                  PUMP {e.pumpNumber}
+                </h1>
                 <div className=" mt-[1.35rem] flex flex-col gap-y-[1.35rem]">
                   <div className=" flex flex-col gap-y-1 items-center">
                     <h2 className=" text-[#868686] text-[2rem] font-black">
@@ -151,8 +153,7 @@ const PumpSetup = () => {
                   </div>
                 </div>
                 <div className=" flex flex-col items-center gap-y-3 mt-auto">
-                  {" "}
-                  <Switch defaultChecked />
+                  <Switch checked={e.isFlush} />
                   <p className=" text-[.8rem] font-bold">Flush</p>
                 </div>
               </div>

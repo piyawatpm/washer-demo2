@@ -1,6 +1,28 @@
 import axios from "axios";
 import useSWR from "swr";
-
+type StatusData = {
+  status: string;
+  inputStatus: {
+    id: string;
+    inputName: string;
+    status: string;
+  }[];
+  pumpStatus: {
+    id: string;
+    pumpName: string;
+    status: string;
+  }[];
+  fluidLevel: {
+    id: string;
+    pumpName: string;
+    status: string;
+  }[];
+  washCycle: {
+    daily: number;
+    weekly: number;
+    monthly: number;
+  };
+};
 export function useStatus() {
   const getMockData = async (url: string) => {
     return {
@@ -106,7 +128,7 @@ export function useStatus() {
         weekly: 36,
         monthly: 144,
       },
-    };
+    } as StatusData;
   };
 
   const fetcher = async (url: string) => {
@@ -119,7 +141,7 @@ export function useStatus() {
   };
 
   console.log("call");
-  return useSWR("/api/v1/status", fetcher, {
+  return useSWR<StatusData>("/api/v1/status", fetcher, {
     refreshInterval: 1000,
   });
 }
