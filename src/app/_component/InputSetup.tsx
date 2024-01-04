@@ -1,23 +1,21 @@
 import { Modal } from "antd";
-import Image from "next/image";
+
 import { useState } from "react";
 import { useStatus } from "../_swr/useStatus";
-type WasherStep =
-  | "Detergent"
-  | "Softener"
-  | "Bleach"
-  | "INPUT 4"
-  | "INPUT 5"
-  | "INPUT 6";
+
 const InputSetup = () => {
-  const [washerStep, setWasherStep] = useState<WasherStep>("Detergent");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<string>("");
   const { data } = useStatus();
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setSelectedId("");
   };
   const handleOpenModal = () => {
     setIsModalOpen(true);
+  };
+  const handleEditInput = async (id: string) => {
+    // call post edit api here
   };
   return (
     <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[4.75rem]">
@@ -51,7 +49,9 @@ const InputSetup = () => {
               CANCEL
             </button>
             <button
-              onClick={handleCloseModal}
+              onClick={() => {
+                handleEditInput(selectedId);
+              }}
               className=" w-[8rem] h-[3.2rem] bg-black "
             >
               OK
@@ -63,10 +63,10 @@ const InputSetup = () => {
         <h1 className=" heading">INPUT SETUP</h1>
         <div className=" flex gap-x-2">
           {data?.inputStatus.map(
-            (input: { status: string; inputName: string }, index: number) => {
+            (input: { status: string; inputName: string; id: string }) => {
               return (
                 <div
-                  key={index}
+                  key={input.id}
                   className=" flex flex-col items-center gap-y-2"
                 >
                   <div
