@@ -1,7 +1,7 @@
 import axios from "axios";
 import useSWR from "swr";
 type PumpData = {
-  id: string;
+  pumpId: string;
   inputId: string;
   inputName: string;
   pumpNumber: number;
@@ -12,42 +12,42 @@ export function usePump() {
   const getMockData = async (url: string) => {
     return [
       {
-        id: "1",
+        pumpId: "1",
         inputId: "1",
         inputName: "Detergent",
         pumpNumber: 1,
         isFlush: true,
       },
       {
-        id: "2",
+        pumpId: "2",
         inputId: "2",
         inputName: "Softener",
         pumpNumber: 2,
         isFlush: true,
       },
       {
-        id: "3",
+        pumpId: "3",
         inputId: "3",
         inputName: "Detergent",
         pumpNumber: 3,
         isFlush: false,
       },
       {
-        id: "4",
+        pumpId: "4",
         inputId: "4",
         inputName: "INPUT 4",
         pumpNumber: 4,
         isFlush: true,
       },
       {
-        id: "5",
+        pumpId: "5",
         inputId: "5",
         inputName: "INPUT 5",
         pumpNumber: 5,
         isFlush: false,
       },
       {
-        id: "6",
+        pumpId: "6",
         inputId: "6",
         inputName: "INPUT 6",
         pumpNumber: 6,

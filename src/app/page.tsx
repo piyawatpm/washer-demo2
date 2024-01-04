@@ -5,7 +5,7 @@ import Dashboard from "./_component/Dashboard";
 import PumpSetup from "./_component/PumpSetup";
 import Solenoid from "./_component/Solenoid";
 import InputSetUp from "./_component/InputSetup";
-import PresetSetup from "./_component/PresetSetuo";
+import PresetSetup from "./_component/PresetSetup";
 type Menu =
   | "DASHBOARD"
   | "PUMP SETUP"
