@@ -11,39 +11,7 @@ type WasherStep =
   | "INPUT 6";
 const Dashboard = () => {
   const { data } = useStatus();
-  console.log(data);
-  const mockPumpStatus = [1, 3, 4, 6];
-  const mockFluidLeve = [
-    {
-      name: "PUMP 1",
-      status: "FULL",
-    },
-    {
-      name: "PUMP 2",
-      status: "LOW",
-    },
-    {
-      name: "PUMP 3",
-      status: "FULL",
-    },
-    {
-      name: "PUMP 4",
-      status: "FULL",
-    },
-    {
-      name: "PUMP 5",
-      status: "LOW",
-    },
-    {
-      name: "PUMP 6",
-      status: "FULL",
-    },
-  ];
-  const mockWashCycleData = {
-    daily: 6,
-    weekly: 36,
-    monthly: 144,
-  };
+  
   return (
     <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[4.75rem]">
       <div className=" flex flex-col gap-y-[.85rem]">

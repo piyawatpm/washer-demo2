@@ -110,7 +110,8 @@ export function useStatus() {
   };
 
   const fetcher = async (url: string) => {
-    return axios.get(url)
+    return axios
+      .get(url)
       .then((res) => res.data)
       .catch((error) => {
         return getMockData(url);
@@ -119,6 +120,6 @@ export function useStatus() {
 
   console.log("call");
   return useSWR("/api/v1/status", fetcher, {
-    refreshInterval: 1000
+    refreshInterval: 1000,
   });
 }
