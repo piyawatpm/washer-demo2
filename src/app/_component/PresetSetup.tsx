@@ -13,6 +13,7 @@ type WasherStep =
 const PresetSetup = () => {
   const [washerStep, setWasherStep] = useState<WasherStep>("Detergent");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
   const [presets, setPresets] = useState([1]);
   const { data: presetData } = usePreset();
   const { data: pumpData } = usePump();
@@ -45,6 +46,10 @@ const PresetSetup = () => {
           label: `Pump${pump.pumpNumber} - ${pump.inputName}`,
         };
       });
+      output.push({
+        value: "",
+        label: `None`,
+      });
       console.log(output);
       return output;
     }
@@ -65,38 +70,49 @@ const PresetSetup = () => {
                     Sheets
                   </p>
                   <button
-                    onClick={handleOpenModal}
-                    className=" cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary text-black flex items-center justify-center"
+                    onClick={() => {
+                      setIsEdit((p) => !p);
+                    }}
+                    className={` ${
+                      !isEdit && "!bg-green-500 !text-white"
+                    }  cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary text-black flex items-center justify-center`}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className=" w-[1.2rem] h-[1.2rem]"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                    >
-                      <path
-                        d="M11.55 3.9L20.1 12.45L8.55 24H0V15.45L11.55 3.9ZM11.55 8.25L3 16.8V21H7.2L15.75 12.45L11.55 8.25ZM15.6 0L24 8.55L21.45 11.1L12.9 2.55L15.6 0Z"
-                        fill="black"
-                      />
-                    </svg>
-                    <p>Edit</p>
+                    {isEdit ? (
+                      <>
+                        {" "}
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className=" w-[1.2rem] h-[1.2rem]"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                        >
+                          <path
+                            d="M11.55 3.9L20.1 12.45L8.55 24H0V15.45L11.55 3.9ZM11.55 8.25L3 16.8V21H7.2L15.75 12.45L11.55 8.25ZM15.6 0L24 8.55L21.45 11.1L12.9 2.55L15.6 0Z"
+                            fill="black"
+                          />
+                        </svg>
+                        <p>Edit</p>
+                      </>
+                    ) : (
+                      <p>Save</p>
+                    )}
                   </button>
                 </div>
-                <div className=" flex gap-x-2 overflow-scroll px-5">
+                <div className=" flex gap-x-2 overflow-scroll p-5 ">
                   {preset?.sequenceData?.map((sequence, i) => {
                     return (
                       <div
                         key={i}
-                        className="  text-[1rem] font-black flex flex-col items-center justify-center gap-y-4"
+                        className="  text-[1rem]  w-[12em] font-black flex flex-col items-center justify-center gap-y-4"
                       >
-                        <div className=" flex flex-col items-center justify-center gap-y-1 w-full">
+                        <div className="  w-full flex flex-col items-center justify-center gap-y-1">
                           <p>SEQUENCE {sequence.order}</p>
                           <Select
                             className=" preset !w-full !font-bold rounded-[.25rem] !bg-[#F5F5F5] text-black flex items-center justify-center"
                             defaultValue={
                               inputOption?.find(
                                 (e) => e.value === sequence.pumpId
-                              )?.label
+                              )?.label ?? ""
                             }
                             style={{ width: 120 }}
                             onChange={onChange}
@@ -108,11 +124,17 @@ const PresetSetup = () => {
                           <p>ACTION</p>
                         </div>
                         <div className=" flex flex-col items-center justify-center gap-y-1">
-                          <input className=" py-1 border px-4 border-black w-full"></input>
+                          <input
+                            value={sequence.delay}
+                            className=" text-center py-1 border px-4 border-black w-full"
+                          ></input>
                           <p>DEALAY</p>
                         </div>
                         <div className=" flex flex-col items-center justify-center gap-y-1">
-                          <input className=" py-1 border px-4 border-black w-full"></input>
+                          <input
+                            value={sequence.ml}
+                            className=" text-center py-1 border px-4 border-black w-full"
+                          ></input>
                           <p>ML</p>
                         </div>
                       </div>
