@@ -6,12 +6,12 @@ type StatusData = {
     id: string;
     inputName: string;
     status: string;
+    inputMlPerKg: number;
   }[];
   pumpStatus: {
     id: string;
     pumpName: string;
     status: string;
-    inputMlPerKg: number;
   }[];
   fluidLevel: {
     id: string;
