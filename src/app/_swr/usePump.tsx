@@ -1,12 +1,16 @@
 import axios from "axios";
 import useSWR from "swr";
-type PumpData = {
+export type PumpData = {
   pumpId: string;
   inputId: string;
   inputName: string;
   pumpNumber: number;
   isFlush: boolean;
-}[];
+  stepPerSecond: number;
+  stepPerMl: number;
+  mlPerKg: number;
+};
+export type PumpApiData = PumpData[];
 
 export function usePump() {
   const getMockData = async (url: string) => {
@@ -17,6 +21,9 @@ export function usePump() {
         inputName: "Detergent",
         pumpNumber: 1,
         isFlush: true,
+        stepPerSecond: 320,
+        stepPerMl: 320,
+        mlPerKg: 1,
       },
       {
         pumpId: "2",
@@ -24,6 +31,9 @@ export function usePump() {
         inputName: "Softener",
         pumpNumber: 2,
         isFlush: true,
+        stepPerSecond: 320,
+        stepPerMl: 320,
+        mlPerKg: 2,
       },
       {
         pumpId: "3",
@@ -31,6 +41,9 @@ export function usePump() {
         inputName: "Detergent",
         pumpNumber: 3,
         isFlush: false,
+        stepPerSecond: 320,
+        stepPerMl: 320,
+        mlPerKg: 3,
       },
       {
         pumpId: "4",
@@ -38,6 +51,9 @@ export function usePump() {
         inputName: "INPUT 4",
         pumpNumber: 4,
         isFlush: true,
+        stepPerSecond: 320,
+        stepPerMl: 320,
+        mlPerKg: 4,
       },
       {
         pumpId: "5",
@@ -45,6 +61,9 @@ export function usePump() {
         inputName: "INPUT 5",
         pumpNumber: 5,
         isFlush: false,
+        stepPerSecond: 320,
+        stepPerMl: 320,
+        mlPerKg: 5,
       },
       {
         pumpId: "6",
@@ -52,8 +71,11 @@ export function usePump() {
         inputName: "INPUT 6",
         pumpNumber: 6,
         isFlush: true,
+        stepPerSecond: 320,
+        stepPerMl: 320,
+        mlPerKg: 6,
       },
-    ] as PumpData;
+    ] as PumpApiData;
   };
 
   const fetcher = async (url: string) => {
@@ -66,7 +88,7 @@ export function usePump() {
   };
 
   console.log("call");
-  return useSWR<PumpData>("/api/v1/pump", fetcher, {
+  return useSWR<PumpApiData>("/api/v1/pump", fetcher, {
     refreshInterval: 1000,
   });
 }

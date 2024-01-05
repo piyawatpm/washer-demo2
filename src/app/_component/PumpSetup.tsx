@@ -1,13 +1,18 @@
 import Image from "next/image";
-import { Switch, Modal, Select } from "antd";
+import { Switch, Modal, Select, message } from "antd";
 import { useMemo, useState } from "react";
-import { useStatus } from "../_swr/useStatus";
-import { usePump } from "../_swr/usePump";
+
+import { PumpData, usePump } from "../_swr/usePump";
+import axios from "axios";
 
 const PumpSetup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentPump, setCurrentPump] = useState<undefined | PumpData>(
+    undefined
+  );
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setCurrentPump(undefined);
   };
   const { data } = usePump();
 
@@ -26,12 +31,50 @@ const PumpSetup = () => {
     input: string,
     option?: { label: string; value: string }
   ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
-  const onChange = (value: string) => {
-    console.log(`selected ${value}`);
-  };
 
   const onSearch = (value: string) => {
     console.log("search:", value);
+  };
+  const handleEditPumpData = async () => {
+    console.log("call post api");
+    try {
+      const res = await axios.post(`/api/v1/pump/${currentPump?.pumpNumber}`, {
+        ...currentPump,
+      });
+      console.log(res);
+      message.success("success");
+    } catch (error) {
+      console.log(error);
+      message.error(error as string);
+    } finally {
+      handleCloseModal();
+    }
+  };
+  const handleChangeInput = async (
+    targetPumpNumber: number,
+    newInputId: string
+  ) => {
+    const currentPumpData = data?.find(
+      (pump) => pump.pumpNumber === targetPumpNumber
+    );
+    console.log("call handle Change input");
+    // call same api but with new inputId
+    try {
+      const res = await axios.post(
+        `/api/v1/pump/${currentPumpData?.pumpNumber}`,
+        {
+          ...currentPumpData,
+          inputId: newInputId,
+        }
+      );
+      console.log(res);
+      message.success("success");
+    } catch (error) {
+      console.log(error);
+      message.error(error as string);
+    } finally {
+      handleCloseModal();
+    }
   };
   return (
     <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[2rem]">
@@ -56,25 +99,55 @@ const PumpSetup = () => {
             <div className=" flex flex-col gap-y-2 w-2/5">
               <p>STEP PER SECOND</p>
               <input
-                type="text"
-                value={"320"}
-                className=" w-full pl-[1.65rem] py-4 bg-[#D9D9D9]"
+                type="number"
+                onChange={(e) => {
+                  setCurrentPump((p) => {
+                    if (p) {
+                      return {
+                        ...p,
+                        stepPerSecond: e.target.value,
+                      } as unknown as PumpData;
+                    } else return p;
+                  });
+                }}
+                value={currentPump?.stepPerSecond ?? ""}
+                className=" w-full px-[1.65rem] py-4 bg-[#D9D9D9]"
               />
             </div>
             <div className=" flex flex-col gap-y-2 w-2/5">
               <p>STEP PER ML</p>
               <input
-                type="text"
-                value={"320"}
-                className=" w-full pl-[1.65rem] py-4 bg-[#D9D9D9]"
+                type="number"
+                value={currentPump?.stepPerMl}
+                onChange={(e) => {
+                  setCurrentPump((p) => {
+                    if (p) {
+                      return {
+                        ...p,
+                        stepPerMl: e.target.value,
+                      } as unknown as PumpData;
+                    } else return p;
+                  });
+                }}
+                className=" w-full px-[1.65rem] py-4 bg-[#D9D9D9]"
               />
             </div>
             <div className=" flex flex-col gap-y-2 w-2/5">
               <p>ML PER KG</p>
               <input
-                type="text"
-                value={"1"}
-                className=" w-full pl-[1.65rem] py-4 bg-[#D9D9D9]"
+                type="number"
+                value={currentPump?.mlPerKg}
+                onChange={(e) => {
+                  setCurrentPump((p) => {
+                    if (p) {
+                      return {
+                        ...p,
+                        mlPerKg: e.target.value,
+                      } as unknown as PumpData;
+                    } else return p;
+                  });
+                }}
+                className=" w-full px-[1.65rem] py-4 bg-[#D9D9D9]"
               />
             </div>
           </div>
@@ -87,7 +160,7 @@ const PumpSetup = () => {
               CANCEL
             </button>
             <button
-              onClick={handleCloseModal}
+              onClick={handleEditPumpData}
               className=" w-[8rem] h-[3.2rem] bg-black "
             >
               OK
@@ -104,7 +177,9 @@ const PumpSetup = () => {
                 className=" !w-full !font-bold rounded-[.25rem] !bg-[#F5F5F5] text-black flex items-center justify-center"
                 defaultValue={e.inputName}
                 style={{ width: 120 }}
-                onChange={onChange}
+                onChange={async (value: string) => {
+                  await handleChangeInput(e.pumpNumber, value);
+                }}
                 showSearch
                 onSearch={onSearch}
                 filterOption={filterOption}
@@ -112,7 +187,10 @@ const PumpSetup = () => {
               />
 
               <button
-                onClick={handleOpenModal}
+                onClick={() => {
+                  setCurrentPump(e);
+                  handleOpenModal();
+                }}
                 className=" cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary text-black flex items-center justify-center"
               >
                 <svg
