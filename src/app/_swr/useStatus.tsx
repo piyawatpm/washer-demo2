@@ -11,6 +11,7 @@ type StatusData = {
     id: string;
     pumpName: string;
     status: string;
+    inputMlPerKg: number;
   }[];
   fluidLevel: {
     id: string;
@@ -32,31 +33,37 @@ export function useStatus() {
           id: "1",
           inputName: "Detergent",
           status: "active",
+          inputMlPerKg: 1,
         },
         {
           id: "2",
           inputName: "Softener",
           status: "inactive",
+          inputMlPerKg: 1,
         },
         {
           id: "3",
           inputName: "Detergent",
           status: "active",
+          inputMlPerKg: 1,
         },
         {
           id: "4",
           inputName: "INPUT 4",
           status: "inactive",
+          inputMlPerKg: 1,
         },
         {
           id: "5",
           inputName: "INPUT 5",
           status: "inactive",
+          inputMlPerKg: 1,
         },
         {
           id: "6",
           inputName: "INPUT 6",
           status: "inactive",
+          inputMlPerKg: 1,
         },
       ],
       pumpStatus: [
