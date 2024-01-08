@@ -3,7 +3,7 @@ import { Key, useState } from "react";
 import { useStatus } from "../_swr/useStatus";
 
 const Dashboard = () => {
-  const { data } = useStatus();
+  const { data } = useStatus(true);
 
   return (
     <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[4.75rem]">

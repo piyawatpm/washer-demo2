@@ -88,7 +88,5 @@ export function usePump() {
   };
 
   console.log("call");
-  return useSWR<PumpApiData>("/api/v1/pump", fetcher, {
-    refreshInterval: 1000,
-  });
+  return useSWR<PumpApiData>("/api/v1/pump", fetcher);
 }

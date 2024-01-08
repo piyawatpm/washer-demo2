@@ -24,7 +24,7 @@ type StatusData = {
     monthly: number;
   };
 };
-export function useStatus() {
+export function useStatus(isRevalidate: boolean) {
   const getMockData = async (url: string) => {
     return {
       status: "start",
@@ -149,6 +149,6 @@ export function useStatus() {
 
   console.log("call");
   return useSWR<StatusData>("/api/v1/status", fetcher, {
-    refreshInterval: 1000,
+    refreshInterval: isRevalidate ? 1000 : 0,
   });
 }

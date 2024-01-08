@@ -6,7 +6,7 @@ import { useStatus } from "../_swr/useStatus";
 const InputSetup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string>("");
-  const { data } = useStatus();
+  const { data } = useStatus(false);
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedId("");
