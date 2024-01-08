@@ -9,6 +9,7 @@ export type PumpData = {
   stepPerSecond: number;
   stepPerMl: number;
   mlPerKg: number;
+  pumpName: string;
 };
 export type PumpApiData = PumpData[];
 
@@ -24,6 +25,7 @@ export function usePump() {
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 1,
+        pumpName: "1",
       },
       {
         pumpId: "2",
@@ -34,6 +36,7 @@ export function usePump() {
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 2,
+        pumpName: "2",
       },
       {
         pumpId: "3",
@@ -44,6 +47,7 @@ export function usePump() {
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 3,
+        pumpName: "3",
       },
       {
         pumpId: "4",
@@ -54,6 +58,7 @@ export function usePump() {
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 4,
+        pumpName: "4",
       },
       {
         pumpId: "5",
@@ -64,6 +69,7 @@ export function usePump() {
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 5,
+        pumpName: "5",
       },
       {
         pumpId: "6",
@@ -74,6 +80,7 @@ export function usePump() {
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 6,
+        pumpName: "6",
       },
     ] as PumpApiData;
   };
