@@ -53,11 +53,13 @@ const PumpSetup = () => {
         bodyStyle={{ height: "100%" }}
       >
         <div className=" flex h-full w-full flex-col items-center justify-center  gap-y-[1.35rem]  ">
-          <div className=" text-[1.4rem] font-black  ">OUTPUT 1</div>
+          <div className=" text-[1.4rem] font-black  ">
+            Pump Number : {currentPump?.pumpNumber}
+          </div>
 
           <div className=" w-full flex items-center gap-x-4  text-base justify-center font-bold px-[7.3rem]">
             <div className=" flex flex-col gap-y-2 w-2/5">
-              <p>PumpName</p>
+              <p>Pump Name</p>
               <input
                 onChange={(e) => {
                   setCurrentPump((p) => {
