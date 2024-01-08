@@ -34,7 +34,9 @@ const Dashboard = () => {
                 data?.status != "start" && " opacity-50"
               } w-full h-full bg-[#06DE1C] rounded-full text-base font-bold flex items-center justify-center`}
             >
-              <p className="flashing-text">START</p>
+              <p className={`${data?.status == "start" && " flashing-text"}`}>
+                START
+              </p>
             </div>
           </div>
           <div
@@ -42,8 +44,14 @@ const Dashboard = () => {
               data?.status != "end" && " opacity-50"
             } w-[7.2rem]  h-[7.2rem] flex items-center justify-center p-4 bg-[#F5F5F5] rounded-full`}
           >
-            <div className=" w-full h-full bg-[#F00] text-white opacity-50 rounded-full text-base font-bold flex items-center justify-center">
-              <p>END</p>
+            <div
+              className={` ${
+                data?.status != "end" && " opacity-50"
+              } w-full h-full bg-[red] rounded-full text-base font-bold flex items-center justify-center`}
+            >
+              <p className={`${data?.status == "end" && " flashing-text"}`}>
+                END
+              </p>
             </div>
           </div>
         </div>
