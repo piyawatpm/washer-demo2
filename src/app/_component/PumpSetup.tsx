@@ -16,25 +16,11 @@ const PumpSetup = () => {
   };
   const { data } = usePump();
 
-  const inputOption = useMemo(() => {
-    if (data) {
-      return data.map((pump) => {
-        return { value: pump.pumpId, label: pump.inputName };
-      });
-    }
-  }, [data]);
-  console.log("inputOption", inputOption);
+ 
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
-  const filterOption = (
-    input: string,
-    option?: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
-
-  const onSearch = (value: string) => {
-    console.log("search:", value);
-  };
+  
   const handleEditPumpData = async () => {
     console.log("call post api");
     try {
@@ -50,32 +36,7 @@ const PumpSetup = () => {
       handleCloseModal();
     }
   };
-  const handleChangeInput = async (
-    targetPumpNumber: number,
-    newInputId: string
-  ) => {
-    const currentPumpData = data?.find(
-      (pump) => pump.pumpNumber === targetPumpNumber
-    );
-    console.log("call handle Change input");
-    // call same api but with new inputId
-    try {
-      const res = await axios.post(
-        `/api/v1/pump/${currentPumpData?.pumpNumber}`,
-        {
-          ...currentPumpData,
-          inputId: newInputId,
-        }
-      );
-      console.log(res);
-      message.success("success");
-    } catch (error) {
-      console.log(error);
-      message.error(error as string);
-    } finally {
-      handleCloseModal();
-    }
-  };
+ 
   return (
     <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[2rem]">
       <Modal
@@ -173,19 +134,10 @@ const PumpSetup = () => {
         {data?.map((e, i) => {
           return (
             <div key={i} className=" h-[600px] flex flex-col gap-y-2">
-              <Select
-                className=" !w-full !font-bold rounded-[.25rem] !bg-[#F5F5F5] text-black flex items-center justify-center"
-                defaultValue={e.inputName}
-                style={{ width: 120 }}
-                onChange={async (value: string) => {
-                  await handleChangeInput(e.pumpNumber, value);
-                }}
-                showSearch
-                onSearch={onSearch}
-                filterOption={filterOption}
-                options={inputOption}
-              />
-
+              <div className=" flex flex-col items-center justify-center bg-[#F5F5F5] w-full rounded-[.25rem] p-[.85rem] font-bold text-black ">
+                {e.inputName}
+              </div>
+             
               <button
                 onClick={() => {
                   setCurrentPump(e);

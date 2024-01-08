@@ -119,13 +119,13 @@ const InputSetup = () => {
         <h1 className=" heading">INPUT SETUP</h1>
         <div className=" flex gap-x-2">
           {data?.inputStatus.map(
-            (input: { status: string; inputName: string; id: string }) => {
+            (input: { status: string; inputName: string; inputId: string }) => {
               return (
                 <div
-                  key={input.id}
+                  key={input.inputId}
                   className=" flex flex-col items-center gap-y-5"
                 >
-                  <div className=" flex flex-col items-center gap-y-2">
+                  <div className=" flex flex-col items-center gap-y-2 ">
                     {" "}
                     <p className=" font-bold text-[1.2rem]">Input name</p>
                     <div
@@ -134,22 +134,31 @@ const InputSetup = () => {
                       <p>{input.inputName}</p>
                     </div>
                   </div>
-                  <Select
-                    className=" !w-full !font-bold rounded-[.25rem] !bg-[#F5F5F5] text-black flex items-center justify-center"
-                    defaultValue={input.inputName}
-                    style={{ width: 120 }}
-                    onChange={async (value: string) => {
-                      console.log(input);
-                      console.log(pumpData);
-                      // await handleChangeInput(e.pumpNumber, value);
-                    }}
-                    showSearch
-                    onSearch={onSearch}
-                    filterOption={filterOption}
-                    options={inputOption}
-                  />
+                  <div className=" flex flex-col items-center gap-y-2 w-full">
+                    <p className=" font-bold text-[1.2rem]">Pump Name</p>
+                    <Select
+                      className=" !w-full !font-bold text-center rounded-[.25rem] !bg-[#F5F5F5] text-black flex items-center justify-center"
+                      defaultValue={
+                        pumpData?.find((e) => e.inputId === input.inputId)
+                          ?.pumpName
+                      }
+                      style={{ width: 120 }}
+                      onChange={async (value: string) => {
+                        console.log(input);
+                        console.log(pumpData);
+                        const targetPump = pumpData?.find(
+                          (e) => e.inputId === input.inputId
+                        );
+                        await handleChangeInput(targetPump!.pumpNumber, value);
+                      }}
+                      showSearch
+                      onSearch={onSearch}
+                      filterOption={filterOption}
+                      options={inputOption}
+                    />
+                  </div>
                   <div className=" flex flex-col items-center gap-y-2">
-                    <p className=" font-bold text-[1.2rem]">ml per kg</p>
+                    <p className=" font-bold text-[1.2rem]">ml</p>
                     <div
                       className={`  py-2 bg-[#F5F5F5] text-black w-[10rem] font-medium rounded-[.25rem]  flex flex-col items-center justify-center`}
                     >

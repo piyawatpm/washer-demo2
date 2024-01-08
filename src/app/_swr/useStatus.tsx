@@ -3,18 +3,18 @@ import useSWR from "swr";
 type StatusData = {
   status: string;
   inputStatus: {
-    id: string;
+    inputId: string;
     inputName: string;
     status: string;
     inputMlPerKg: number;
   }[];
   pumpStatus: {
-    id: string;
+    pumpId: string;
     pumpName: string;
     status: string;
   }[];
   fluidLevel: {
-    id: string;
+    pumpId: string;
     pumpName: string;
     status: string;
   }[];
@@ -30,37 +30,37 @@ export function useStatus(isRevalidate: boolean) {
       status: "start",
       inputStatus: [
         {
-          id: "1",
+          inputId: "1",
           inputName: "Detergent",
           status: "active",
           inputMlPerKg: 1,
         },
         {
-          id: "2",
+          inputId: "2",
           inputName: "Softener",
           status: "inactive",
           inputMlPerKg: 1,
         },
         {
-          id: "3",
+          inputId: "3",
           inputName: "Detergent",
           status: "active",
           inputMlPerKg: 1,
         },
         {
-          id: "4",
+          inputId: "4",
           inputName: "INPUT 4",
           status: "inactive",
           inputMlPerKg: 1,
         },
         {
-          id: "5",
+          inputId: "5",
           inputName: "INPUT 5",
           status: "inactive",
           inputMlPerKg: 1,
         },
         {
-          id: "6",
+          inputId: "6",
           inputName: "INPUT 6",
           status: "inactive",
           inputMlPerKg: 1,
@@ -68,64 +68,64 @@ export function useStatus(isRevalidate: boolean) {
       ],
       pumpStatus: [
         {
-          id: "1",
+          pumpId: "1",
           pumpName: "PUMP 1",
           status: "active",
         },
         {
-          id: "2",
+          pumpId: "2",
           pumpName: "PUMP 2",
           status: "inactive",
         },
         {
-          id: "3",
+          pumpId: "3",
           pumpName: "PUMP 3",
           status: "active",
         },
         {
-          id: "4",
+          pumpId: "4",
           pumpName: "PUMP 4",
           status: "inactive",
         },
         {
-          id: "5",
+          pumpId: "5",
           pumpName: "PUMP 5",
           status: "inactive",
         },
         {
-          id: "6",
+          pumpId: "6",
           pumpName: "PUMP 6",
           status: "inactive",
         },
       ],
       fluidLevel: [
         {
-          id: "1",
+          pumpId: "1",
           pumpName: "PUMP 1",
           status: "FULL",
         },
         {
-          id: "2",
+          pumpId: "2",
           pumpName: "PUMP 2",
           status: "LOW",
         },
         {
-          id: "3",
+          pumpId: "3",
           pumpName: "PUMP 3",
           status: "FULL",
         },
         {
-          id: "4",
+          pumpId: "4",
           pumpName: "PUMP 4",
           status: "FULL",
         },
         {
-          id: "5",
+          pumpId: "5",
           pumpName: "PUMP 5",
           status: "LOW",
         },
         {
-          id: "6",
+          pumpId: "6",
           pumpName: "PUMP 6",
           status: "FULL",
         },
