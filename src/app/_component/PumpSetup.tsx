@@ -16,11 +16,10 @@ const PumpSetup = () => {
   };
   const { data } = usePump();
 
- 
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
-  
+
   const handleEditPumpData = async () => {
     console.log("call post api");
     try {
@@ -36,7 +35,7 @@ const PumpSetup = () => {
       handleCloseModal();
     }
   };
- 
+
   return (
     <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[2rem]">
       <Modal
@@ -57,6 +56,23 @@ const PumpSetup = () => {
           <div className=" text-[1.4rem] font-black  ">OUTPUT 1</div>
 
           <div className=" w-full flex items-center gap-x-4  text-base justify-center font-bold px-[7.3rem]">
+            <div className=" flex flex-col gap-y-2 w-2/5">
+              <p>PumpName</p>
+              <input
+                onChange={(e) => {
+                  setCurrentPump((p) => {
+                    if (p) {
+                      return {
+                        ...p,
+                        pumpName: e.target.value,
+                      } as unknown as PumpData;
+                    } else return p;
+                  });
+                }}
+                value={currentPump?.pumpName ?? ""}
+                className=" w-full px-[1.65rem] py-4 bg-[#D9D9D9]"
+              />
+            </div>
             <div className=" flex flex-col gap-y-2 w-2/5">
               <p>STEP PER SECOND</p>
               <input
@@ -137,7 +153,7 @@ const PumpSetup = () => {
               <div className=" flex flex-col items-center justify-center bg-[#F5F5F5] w-full rounded-[.25rem] p-[.85rem] font-bold text-black ">
                 {e.inputName}
               </div>
-             
+
               <button
                 onClick={() => {
                   setCurrentPump(e);
