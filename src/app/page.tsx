@@ -49,8 +49,9 @@ export default function Home() {
         <div className=" flex ml-auto gap-x-[30px] items-center">
           {[
             "DASHBOARD",
-            "INPUT SETUP",
             "PUMP SETUP",
+            "INPUT SETUP",
+
             "PRESET SETUP",
             "SOLENOID",
           ].map((e, index) => {
