@@ -25,7 +25,7 @@ export function usePump() {
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 1,
-        pumpName: "1",
+        pumpName: "p name 1",
       },
       {
         pumpId: "2",
@@ -36,7 +36,7 @@ export function usePump() {
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 2,
-        pumpName: "2",
+        pumpName: "p name 2",
       },
       {
         pumpId: "3",
@@ -47,7 +47,7 @@ export function usePump() {
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 3,
-        pumpName: "3",
+        pumpName: "p name 3",
       },
       {
         pumpId: "4",
@@ -58,7 +58,7 @@ export function usePump() {
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 4,
-        pumpName: "4",
+        pumpName: "p name 4",
       },
       {
         pumpId: "5",
@@ -69,7 +69,7 @@ export function usePump() {
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 5,
-        pumpName: "5",
+        pumpName: "pump name 5",
       },
       {
         pumpId: "6",
@@ -80,7 +80,7 @@ export function usePump() {
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 6,
-        pumpName: "6",
+        pumpName: "pump name 6",
       },
     ] as PumpApiData;
   };

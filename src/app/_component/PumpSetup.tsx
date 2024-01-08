@@ -177,9 +177,7 @@ const PumpSetup = () => {
                 <p>Edit</p>
               </button>
               <div className=" flex-1 flex flex-col items-center bg-[#F5F5F5] w-full rounded-[.25rem] pt-[.85rem] pb-[1.85rem]">
-                <h1 className=" text-[1.2rem] font-black">
-                  PUMP {e.pumpNumber}
-                </h1>
+                <h1 className=" text-[1.2rem] font-black">{e.pumpName}</h1>
                 <div className=" mt-[1.35rem] flex flex-col gap-y-[1.35rem]">
                   <div className=" flex flex-col gap-y-1 items-center">
                     <h2 className=" text-[#868686] text-[2rem] font-black">
