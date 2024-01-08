@@ -43,7 +43,7 @@ const PresetSetup = () => {
       const output = pumpData.map((pump) => {
         return {
           value: pump.pumpId,
-          label: `Pump${pump.pumpNumber} - ${pump.inputName}`,
+          label: `${pump.pumpName} - ${pump.inputName}`,
         };
       });
       output.push({
