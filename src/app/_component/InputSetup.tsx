@@ -1,15 +1,12 @@
-import { Modal, Select, message } from "antd";
+import { Modal } from "antd";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useStatus } from "../_swr/useStatus";
-import { usePump } from "../_swr/usePump";
-import axios from "axios";
 
 const InputSetup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string>("");
   const { data } = useStatus(false);
-  const { data: pumpData } = usePump();
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedId("");
@@ -20,48 +17,6 @@ const InputSetup = () => {
   const handleEditInput = async (id: string) => {
     // call post edit api here
   };
-  const filterOption = (
-    input: string,
-    option?: { label: string; value: string }
-  ) => (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
-
-  const onSearch = (value: string) => {
-    console.log("search:", value);
-  };
-  const inputOption = useMemo(() => {
-    if (pumpData) {
-      return pumpData.map((pump) => {
-        return { value: pump.pumpId, label: pump.pumpName };
-      });
-    } else return [];
-  }, [pumpData]);
-  const handleChangeInput = async (
-    targetPumpNumber: number,
-    newInputId: string
-  ) => {
-    const currentPumpData = pumpData?.find(
-      (pump) => pump.pumpNumber === targetPumpNumber
-    );
-    console.log("call handle Change input");
-    // call same api but with new inputId
-    try {
-      const res = await axios.post(
-        `/api/v1/pump/${currentPumpData?.pumpNumber}`,
-        {
-          ...currentPumpData,
-          inputId: newInputId,
-        }
-      );
-      console.log(res);
-      message.success("success");
-    } catch (error) {
-      console.log(error);
-      message.error(error as string);
-    } finally {
-      handleCloseModal();
-    }
-  };
-
   return (
     <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[4.75rem]">
       <Modal
@@ -125,7 +80,7 @@ const InputSetup = () => {
                   key={input.inputId}
                   className=" flex flex-col items-center gap-y-5"
                 >
-                  <div className=" flex flex-col items-center gap-y-2 ">
+                  <div className=" flex flex-col items-center gap-y-2">
                     {" "}
                     <p className=" font-bold text-[1.2rem]">Input name</p>
                     <div
@@ -134,31 +89,8 @@ const InputSetup = () => {
                       <p>{input.inputName}</p>
                     </div>
                   </div>
-                  <div className=" flex flex-col items-center gap-y-2 w-full">
-                    <p className=" font-bold text-[1.2rem]">Pump Name</p>
-                    <Select
-                      className=" !w-full !font-bold text-center rounded-[.25rem] !bg-[#F5F5F5] text-black flex items-center justify-center"
-                      defaultValue={
-                        pumpData?.find((e) => e.inputId === input.inputId)
-                          ?.pumpName
-                      }
-                      style={{ width: 120 }}
-                      onChange={async (value: string) => {
-                        console.log(input);
-                        console.log(pumpData);
-                        const targetPump = pumpData?.find(
-                          (e) => e.inputId === input.inputId
-                        );
-                        await handleChangeInput(targetPump!.pumpNumber, value);
-                      }}
-                      showSearch
-                      onSearch={onSearch}
-                      filterOption={filterOption}
-                      options={inputOption}
-                    />
-                  </div>
                   <div className=" flex flex-col items-center gap-y-2">
-                    <p className=" font-bold text-[1.2rem]">ml</p>
+                    <p className=" font-bold text-[1.2rem]">ml per kg</p>
                     <div
                       className={`  py-2 bg-[#F5F5F5] text-black w-[10rem] font-medium rounded-[.25rem]  flex flex-col items-center justify-center`}
                     >
