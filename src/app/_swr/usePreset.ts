@@ -128,7 +128,5 @@ export function usePreset() {
   };
 
   console.log("call");
-  return useSWR<PresetData>("/api/v1/preset", fetcher, {
-    refreshInterval: 1000,
-  });
+  return useSWR<PresetData>("/api/v1/preset", fetcher);
 }

@@ -1,8 +1,9 @@
 import { Modal, Select, Switch } from "antd";
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { usePreset } from "../_swr/usePreset";
+
 import { usePump } from "../_swr/usePump";
+import { usePreset } from "../_swr/usePreset";
 type WasherStep =
   | "Detergent"
   | "Softener"
