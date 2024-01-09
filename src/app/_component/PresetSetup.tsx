@@ -1,9 +1,11 @@
 import { Modal, Select, Switch } from "antd";
 import Image from "next/image";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { v4 } from "uuid";
 
 import { usePump } from "../_swr/usePump";
-import { usePreset } from "../_swr/usePreset";
+import { PresetType, usePreset } from "../_swr/usePreset";
+import axios from "axios";
 type WasherStep =
   | "Detergent"
   | "Softener"
@@ -14,16 +16,109 @@ type WasherStep =
 const PresetSetup = () => {
   const [washerStep, setWasherStep] = useState<WasherStep>("Detergent");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editIds, setEditIds] = useState<string[]>([]);
   const [isEdit, setIsEdit] = useState(false);
-  const [presets, setPresets] = useState([1]);
+  const initialPreset = {
+    presetId: "1",
+    isFlush: false,
+    isTrigger: false,
+    sequenceData: [
+      {
+        pumpId: null,
+        order: 1,
+        inputId: null,
+        inputName: null,
+        pumpNumber: null,
+        delay: 0,
+        ml: 0,
+      },
+      {
+        pumpId: null,
+        order: 2,
+        inputId: null,
+        inputName: null,
+        pumpNumber: null,
+        delay: 0,
+        ml: 0,
+      },
+      {
+        pumpId: null,
+        order: 3,
+        inputId: null,
+        inputName: null,
+        pumpNumber: null,
+        delay: 0,
+        ml: 0,
+      },
+      {
+        pumpId: null,
+        order: 4,
+        inputId: null,
+        inputName: null,
+        pumpNumber: null,
+        delay: 0,
+        ml: 0,
+      },
+      {
+        pumpId: null,
+        order: 5,
+        inputId: null,
+        inputName: null,
+        pumpNumber: null,
+        delay: 0,
+        ml: 0,
+      },
+      {
+        pumpId: null,
+        order: 6,
+        inputId: null,
+        inputName: null,
+        pumpNumber: null,
+        delay: 0,
+        ml: 0,
+      },
+      {
+        pumpId: null,
+        order: 7,
+        inputId: null,
+        inputName: null,
+        pumpNumber: null,
+        delay: 0,
+        ml: 0,
+      },
+      {
+        pumpId: null,
+        order: 8,
+        inputId: null,
+        inputName: null,
+        pumpNumber: null,
+        delay: 0,
+        ml: 0,
+      },
+      {
+        pumpId: null,
+        order: 9,
+        inputId: null,
+        inputName: null,
+        pumpNumber: null,
+        delay: 0,
+        ml: 0,
+      },
+      {
+        pumpId: null,
+        order: 10,
+        inputId: null,
+        inputName: null,
+        pumpNumber: null,
+        delay: 0,
+        ml: 0,
+      },
+    ],
+  };
+  const [presets, setPresets] = useState<PresetType[]>([initialPreset]);
   const { data: presetData } = usePreset();
   const { data: pumpData } = usePump();
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
+
   const filterOption = (
     input: string,
     option?: { label: string; value: string }
@@ -35,8 +130,6 @@ const PresetSetup = () => {
   const onSearch = (value: string) => {
     console.log("search:", value);
   };
-
-  console.log("console.log(pumpData) =", pumpData);
   const inputOption = useMemo(() => {
     console.log(pumpData);
     if (pumpData) {
@@ -55,31 +148,95 @@ const PresetSetup = () => {
       return output;
     }
   }, [pumpData]);
+  useEffect(() => {
+    if (presetData) {
+      setPresets(presetData);
+    }
+  }, [presetData]);
+  const handleAddPreset = () => {
+    setPresets((p) => {
+      return [...p, { ...initialPreset, presetId: v4(), isNew: true }];
+    });
+  };
+  const handleAddNewPreset = async (presetData: PresetType) => {
+    try {
+      const res = await axios.post("/api/v1/preset", presetData);
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleEditPreset = async (presetData: PresetType) => {
+    try {
+      const res = await axios.post(
+        `/api/v1/preset/${presetData.presetId}`,
+        presetData
+      );
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleRemovePreset = async (presetData: PresetType) => {
+    if (presetData.isNew) {
+      setPresets((p) =>
+        p.filter((preset) => preset.presetId !== presetData.presetId)
+      );
+    } else {
+      try {
+        const res = axios.delete(`/api/v1/preset/${presetData.presetId}`);
+      } catch (error) {}
+      setPresets((p) =>
+        p.filter((preset) => preset.presetId !== presetData.presetId)
+      );
+    }
+  };
   return (
     <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[4.75rem]">
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className=" heading">PRESET SETUP</h1>
         <div className=" flex flex-col gap-y-5 w-full">
-          {presetData?.map((preset, i) => {
+          {presets?.map((preset, i) => {
             return (
-              <div
-                key={preset.presetId}
-                className=" bg-[#F5F5F5] w-full p-[1.35rem] flex items-center justify-between"
-              >
-                <div className=" flex flex-col gap-y-5">
-                  <p className=" text-[1.25rem] text-[#868686] font-black">
-                    Sheets
-                  </p>
-                  <button
-                    onClick={() => {
-                      setIsEdit((p) => !p);
-                    }}
-                    className={` ${
-                      !isEdit && "!bg-green-500 !text-white"
-                    }  cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary text-black flex items-center justify-center`}
-                  >
-                    {isEdit ? (
+              <div key={preset.presetId} className=" flex flex-col">
+                <div className=" bg-[#F5F5F5] w-full p-[1.35rem] flex items-center justify-between">
+                  <div className=" flex flex-col gap-y-5">
+                    <p className=" text-[1.25rem] text-[#868686] font-black">
+                      Sheets
+                    </p>
+                    {editIds.includes(preset.presetId) ? (
                       <>
+                        <button
+                          onClick={() => {
+                            if (preset.isNew) {
+                              handleAddNewPreset(preset);
+                            } else {
+                              handleEditPreset(preset);
+                            }
+                          }}
+                          className={` !bg-green-500 !text-white  cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary flex items-center justify-center`}
+                        >
+                          {" "}
+                          <p>Save</p>
+                        </button>
+                        <button
+                          onClick={() => {
+                            setEditIds((p) =>
+                              p.filter((id) => id !== preset.presetId)
+                            );
+                          }}
+                          className={`  cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary text-black flex items-center justify-center`}
+                        >
+                          <p>Cancel</p>
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        onClick={() => {
+                          setEditIds((p) => [...p, preset.presetId]);
+                        }}
+                        className={` cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary text-black flex items-center justify-center`}
+                      >
                         {" "}
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -93,65 +250,71 @@ const PresetSetup = () => {
                           />
                         </svg>
                         <p>Edit</p>
-                      </>
-                    ) : (
-                      <p>Save</p>
+                      </button>
                     )}
-                  </button>
-                </div>
-                <div className=" flex gap-x-2 overflow-scroll p-5 ">
-                  {preset?.sequenceData?.map((sequence, i) => {
-                    return (
-                      <div
-                        key={i}
-                        className="  text-[1rem]  w-[12em] font-black flex flex-col items-center justify-center gap-y-4"
-                      >
-                        <div className="  w-full flex flex-col items-center justify-center gap-y-1">
-                          <p>SEQUENCE {sequence.order}</p>
-                          <Select
-                            className=" preset !w-full !font-bold rounded-[.25rem] !bg-[#F5F5F5] text-black flex items-center justify-center"
-                            defaultValue={
-                              inputOption?.find(
-                                (e) => e.value === sequence.pumpId
-                              )?.label ?? ""
-                            }
-                            style={{ width: 120 }}
-                            onChange={onChange}
-                            showSearch
-                            onSearch={onSearch}
-                            filterOption={filterOption}
-                            options={inputOption}
-                          />
-                          <p>ACTION</p>
-                        </div>
-                        <div className=" flex flex-col items-center justify-center gap-y-1">
-                          <input
-                            value={sequence.delay}
-                            className=" text-center py-1 border px-4 border-black w-full"
-                          ></input>
-                          <p>DEALAY</p>
-                        </div>
-                        <div className=" flex flex-col items-center justify-center gap-y-1">
-                          <input
-                            value={sequence.ml}
-                            className=" text-center py-1 border px-4 border-black w-full"
-                          ></input>
-                          <p>ML</p>
-                        </div>
-                      </div>
-                    );
-                  })}
-                  <div className=" flex items-center gap-y-5"></div>
-                </div>
-                <div className=" flex items-center gap-x-5 text-[1.2rem] font-black">
-                  <div className=" flex flex-col items-center gap-y-2">
-                    <p>FLUSH</p>
-                    <Switch checked={preset.isFlush} />
                   </div>
-                  <div className=" flex flex-col items-center gap-y-2">
-                    <p>TRIGGER</p>
-                    <Switch checked={preset.isTrigger} />
+                  <div className=" flex gap-x-2 overflow-scroll p-5 ">
+                    {preset?.sequenceData?.map((sequence, i) => {
+                      return (
+                        <div
+                          key={i}
+                          className="  text-[1rem]  w-[12em] font-black flex flex-col items-center justify-center gap-y-4"
+                        >
+                          <div className="  w-full flex flex-col items-center justify-center gap-y-1">
+                            <p>SEQUENCE {sequence.order}</p>
+                            <Select
+                              className=" preset !w-full !font-bold rounded-[.25rem] !bg-[#F5F5F5] text-black flex items-center justify-center"
+                              defaultValue={
+                                inputOption?.find(
+                                  (e) => e.value === sequence.pumpId
+                                )?.label ?? ""
+                              }
+                              style={{ width: 120 }}
+                              onChange={onChange}
+                              showSearch
+                              onSearch={onSearch}
+                              filterOption={filterOption}
+                              options={inputOption}
+                            />
+                            <p>ACTION</p>
+                          </div>
+                          <div className=" flex flex-col items-center justify-center gap-y-1">
+                            <input
+                              value={sequence.delay}
+                              className=" text-center py-1 border px-4 border-black w-full"
+                            ></input>
+                            <p>DEALAY</p>
+                          </div>
+                          <div className=" flex flex-col items-center justify-center gap-y-1">
+                            <input
+                              value={sequence.ml}
+                              className=" text-center py-1 border px-4 border-black w-full"
+                            ></input>
+                            <p>ML</p>
+                          </div>
+                        </div>
+                      );
+                    })}
+                    <div className=" flex items-center gap-y-5"></div>
                   </div>
+                  <div className=" flex items-center gap-x-5 text-[1.2rem] font-black">
+                    <div className=" flex flex-col items-center gap-y-2">
+                      <p>FLUSH</p>
+                      <Switch checked={preset.isFlush} />
+                    </div>
+                    <div className=" flex flex-col items-center gap-y-2">
+                      <p>TRIGGER</p>
+                      <Switch checked={preset.isTrigger} />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  onClick={() => {
+                    handleRemovePreset(preset);
+                  }}
+                  className=" w-full flex items-center justify-center bg-red-500 font-bold py-3 text-white cursor-pointer "
+                >
+                  <p>REMOVE</p>
                 </div>
               </div>
             );
@@ -159,11 +322,7 @@ const PresetSetup = () => {
         </div>
         <div
           onClick={() => {
-            setPresets((p) => {
-              const newArr = [...p];
-              newArr.push(1);
-              return newArr;
-            });
+            handleAddPreset();
           }}
           className=" hover:border cursor-pointer h-[13rem] w-full bg-[#F5F5F5] flex items-center justify-center gap-x-4"
         >

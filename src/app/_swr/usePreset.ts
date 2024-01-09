@@ -1,6 +1,8 @@
 import axios from "axios";
 import useSWR from "swr";
-type PresetData = {
+export type PresetType =  {
+  // for case add new if false = edit preset
+  isNew?:boolean
   presetId: string;
   isFlush: boolean;
   isTrigger: boolean;
@@ -13,7 +15,8 @@ type PresetData = {
     delay: number;
     ml: number;
   }[];
-}[];
+}
+type PresetData =PresetType[];
 
 export function usePreset() {
   const getMockData = async (url: string) => {
