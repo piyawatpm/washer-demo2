@@ -44,7 +44,7 @@ const InputSetup = () => {
               />
             </div>
             <div className=" flex flex-col  w-full gap-y-3">
-              <p className=" text-[1.2rem]">ml per kg</p>
+              <p className=" text-[1.2rem]">ml</p>
               <input
                 type="text"
                 placeholder={"1"}
@@ -90,7 +90,7 @@ const InputSetup = () => {
                     </div>
                   </div>
                   <div className=" flex flex-col items-center gap-y-2">
-                    <p className=" font-bold text-[1.2rem]">ml per kg</p>
+                    <p className=" font-bold text-[1.2rem]">ml</p>
                     <div
                       className={`  py-2 bg-[#F5F5F5] text-black w-[10rem] font-medium rounded-[.25rem]  flex flex-col items-center justify-center`}
                     >
