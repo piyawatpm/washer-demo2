@@ -1,13 +1,14 @@
 import axios from "axios";
 import useSWR from "swr";
+export type InputType = {
+  inputId: string | null;
+  inputName: string;
+  status?: string;
+  inputMl: number;
+}
 type StatusData = {
   status: string;
-  inputStatus: {
-    inputId: string;
-    inputName: string;
-    status: string;
-    inputMlPerKg: number;
-  }[];
+  inputStatus: InputType[];
   pumpStatus: {
     pumpId: string;
     pumpName: string;
@@ -33,37 +34,37 @@ export function useStatus(isRevalidate: boolean) {
           inputId: "1",
           inputName: "Detergent",
           status: "active",
-          inputMlPerKg: 1,
+          inputMl: 1,
         },
         {
           inputId: "2",
           inputName: "Softener",
           status: "inactive",
-          inputMlPerKg: 1,
+          inputMl: 1,
         },
         {
           inputId: "3",
           inputName: "Detergent",
           status: "active",
-          inputMlPerKg: 1,
+          inputMl: 1,
         },
         {
           inputId: "4",
           inputName: "INPUT 4",
           status: "inactive",
-          inputMlPerKg: 1,
+          inputMl: 1,
         },
         {
           inputId: "5",
           inputName: "INPUT 5",
           status: "inactive",
-          inputMlPerKg: 1,
+          inputMl: 1,
         },
         {
           inputId: "6",
           inputName: "INPUT 6",
           status: "inactive",
-          inputMlPerKg: 1,
+          inputMl: 1,
         },
       ],
       pumpStatus: [

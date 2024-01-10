@@ -8,10 +8,10 @@ const InputSetup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const initialInput = {
     inputName: "",
-    inputMl: "",
+    inputMl: 0,
     inputId: null,
   };
-  const [seletedInput, setSelectedInput] = useState(initialInput);
+  const [seletedInput, setSelectedInput] = useState<InputType>(initialInput);
   const { data } = useStatus(false);
 
   const handleCloseModal = () => {
@@ -68,11 +68,14 @@ const InputSetup = () => {
             <div className=" flex flex-col  w-full gap-y-3">
               <p className=" text-[1.2rem]">ml</p>
               <input
-                type="text"
+                type="number"
                 value={seletedInput.inputMl}
                 onChange={(e) => {
                   setSelectedInput((p) => {
-                    return { ...p, inputMl: e.target.value };
+                    return {
+                      ...p,
+                      inputMl: Number(e.target.value),
+                    } as InputType;
                   });
                 }}
                 className=" w-full pl-[1.65rem] py-4 bg-[#D9D9D9]"
