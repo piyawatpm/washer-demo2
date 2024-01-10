@@ -39,12 +39,9 @@ const InputSetup = () => {
       <Modal
         title=""
         open={isModalOpen}
-        // onOk={handleOk}
         closeIcon={null}
-        // style={{ backgroundColor: 'transparent' }}
         centered
         footer={null}
-        // onCancel={handleCancel}
         className=" !w-[75rem] !"
         closable={false}
         onCancel={handleCloseModal}

@@ -51,7 +51,6 @@ export default function Home() {
             "DASHBOARD",
             "PUMP SETUP",
             "INPUT SETUP",
-
             "PRESET SETUP",
             "SOLENOID",
           ].map((e, index) => {

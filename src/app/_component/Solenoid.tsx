@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Switch } from "antd";
 import { useEffect, useState } from "react";
 import { SolenoidData, useSolenoid } from "../_swr/useSolenoid";

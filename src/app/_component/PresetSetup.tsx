@@ -6,18 +6,9 @@ import { v4 } from "uuid";
 import { usePump } from "../_swr/usePump";
 import { PresetType, usePreset } from "../_swr/usePreset";
 import axios from "axios";
-type WasherStep =
-  | "Detergent"
-  | "Softener"
-  | "Bleach"
-  | "INPUT 4"
-  | "INPUT 5"
-  | "INPUT 6";
+
 const PresetSetup = () => {
-  const [washerStep, setWasherStep] = useState<WasherStep>("Detergent");
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [editIds, setEditIds] = useState<string[]>([]);
-  const [isEdit, setIsEdit] = useState(false);
   const initialPreset = {
     presetId: "1",
     isFlush: false,

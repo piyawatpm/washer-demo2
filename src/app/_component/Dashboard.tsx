@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { Key, useState } from "react";
-import { useStatus } from "../_swr/useStatus";
+import { Key } from "react";
+import { InputType, useStatus } from "../_swr/useStatus";
 
 const Dashboard = () => {
   const { data } = useStatus(true);
@@ -10,22 +10,20 @@ const Dashboard = () => {
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className=" heading">INPUT STATUS</h1>
         <div className=" flex gap-x-2">
-          {data?.inputStatus.map(
-            (e: { status: string; inputName: string }, index: Key) => {
-              return (
-                <div
-                  key={index}
-                  className={` ${
-                    e.status === "active"
-                      ? "bg-[#06DE1C] text-white"
-                      : "bg-[red] text-white"
-                  } py-2 w-[10rem] font-bold rounded-[.25rem]  flex items-center justify-center`}
-                >
-                  {e.inputName}
-                </div>
-              );
-            }
-          )}
+          {data?.inputStatus.map((e: InputType, index: Key) => {
+            return (
+              <div
+                key={index}
+                className={` ${
+                  e.status === "active"
+                    ? "bg-[#06DE1C] text-white"
+                    : "bg-[red] text-white"
+                } py-2 w-[10rem] font-bold rounded-[.25rem]  flex items-center justify-center`}
+              >
+                {e.inputName}
+              </div>
+            );
+          })}
         </div>
         <div className=" flex gap-x-4">
           <div className=" w-[7.2rem]  h-[7.2rem] flex items-center justify-center p-4 bg-[#F5F5F5] rounded-full">
