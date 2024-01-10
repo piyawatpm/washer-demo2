@@ -52,7 +52,7 @@ export function useStatus(isRevalidate: boolean) {
           inputId: "4",
           inputName: "INPUT 4",
           status: "inactive",
-          inputMl: 1,
+          inputMl: 2,
         },
         {
           inputId: "5",
