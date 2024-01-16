@@ -3,6 +3,7 @@ import { Modal } from "antd";
 import { useState } from "react";
 import { InputType, useStatus } from "../_swr/useStatus";
 import axios from "axios";
+import { useInput } from "../_swr/useInput";
 
 const InputSetup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,7 +13,7 @@ const InputSetup = () => {
     inputId: null,
   };
   const [seletedInput, setSelectedInput] = useState<InputType>(initialInput);
-  const { data } = useStatus(false);
+  const { data } = useInput();
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -100,7 +101,7 @@ const InputSetup = () => {
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className=" heading">INPUT SETUP</h1>
         <div className=" flex gap-x-2">
-          {data?.inputStatus.map((input: InputType) => {
+          {data?.map((input: InputType) => {
             return (
               <div
                 key={input.inputId}
