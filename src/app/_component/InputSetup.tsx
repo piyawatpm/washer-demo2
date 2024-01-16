@@ -1,4 +1,4 @@
-import { Modal } from "antd";
+import { Modal, message } from "antd";
 
 import { useState } from "react";
 import { InputType, useStatus } from "../_swr/useStatus";
@@ -13,7 +13,7 @@ const InputSetup = () => {
     inputId: null,
   };
   const [seletedInput, setSelectedInput] = useState<InputType>(initialInput);
-  const { data } = useInput();
+  const { data, mutate: refetchInputData } = useInput();
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -30,8 +30,11 @@ const InputSetup = () => {
         inputData
       );
       console.log(res);
+      await refetchInputData();
+      message.success("success");
     } catch (error) {
       console.log(error);
+      message.error("success");
     }
     handleCloseModal();
   };

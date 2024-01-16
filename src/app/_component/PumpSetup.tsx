@@ -14,8 +14,8 @@ const PumpSetup = () => {
     setIsModalOpen(false);
     setCurrentPump(undefined);
   };
-  const { data } = usePump();
-
+  const { data, mutate: refetchPumpData } = usePump();
+  console.log("pumpdata= ", data);
   const inputOption = useMemo(() => {
     if (data) {
       return data.map((pump) => {
@@ -42,6 +42,7 @@ const PumpSetup = () => {
         ...currentPump,
       });
       console.log(res);
+      await refetchPumpData();
       message.success("success");
     } catch (error) {
       console.log(error);
@@ -105,7 +106,7 @@ const PumpSetup = () => {
                     if (p) {
                       return {
                         ...p,
-                        stepPerSecond: e.target.value,
+                        stepPerSecond: Number(e.target.value),
                       } as unknown as PumpData;
                     } else return p;
                   });
@@ -124,7 +125,7 @@ const PumpSetup = () => {
                     if (p) {
                       return {
                         ...p,
-                        stepPerMl: e.target.value,
+                        stepPerMl: Number(e.target.value),
                       } as unknown as PumpData;
                     } else return p;
                   });
@@ -142,7 +143,7 @@ const PumpSetup = () => {
                     if (p) {
                       return {
                         ...p,
-                        mlPerKg: e.target.value,
+                        mlPerKg: Number(e.target.value),
                       } as unknown as PumpData;
                     } else return p;
                   });
