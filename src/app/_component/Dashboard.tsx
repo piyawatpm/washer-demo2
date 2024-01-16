@@ -3,14 +3,14 @@ import { Key } from "react";
 import { InputType, useStatus } from "../_swr/useStatus";
 
 const Dashboard = () => {
-  const { data } = useStatus(true);
+  const { data: StatusData } = useStatus(true);
 
   return (
     <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[4.75rem]">
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className=" heading">INPUT STATUS</h1>
         <div className=" flex gap-x-2">
-          {data?.inputStatus.map((e: InputType, index: Key) => {
+          {StatusData?.inputStatus.map((e: InputType, index: Key) => {
             return (
               <div
                 key={index}
@@ -29,25 +29,31 @@ const Dashboard = () => {
           <div className=" w-[7.2rem]  h-[7.2rem] flex items-center justify-center p-4 bg-[#F5F5F5] rounded-full">
             <div
               className={` ${
-                data?.status != "start" && " opacity-50"
+                StatusData?.status != "start" && " opacity-50"
               } w-full h-full bg-[#06DE1C] rounded-full text-base font-bold flex items-center justify-center`}
             >
-              <p className={`${data?.status == "start" && " flashing-text"}`}>
+              <p
+                className={`${
+                  StatusData?.status == "start" && " flashing-text"
+                }`}
+              >
                 START
               </p>
             </div>
           </div>
           <div
             className={`${
-              data?.status != "end" && " opacity-50"
+              StatusData?.status != "end" && " opacity-50"
             } w-[7.2rem]  h-[7.2rem] flex items-center justify-center p-4 bg-[#F5F5F5] rounded-full`}
           >
             <div
               className={` ${
-                data?.status != "end" && " opacity-50"
+                StatusData?.status != "end" && " opacity-50"
               } w-full h-full bg-[red] rounded-full text-base font-bold flex items-center justify-center`}
             >
-              <p className={`${data?.status == "end" && " flashing-text"}`}>
+              <p
+                className={`${StatusData?.status == "end" && " flashing-text"}`}
+              >
                 END
               </p>
             </div>
@@ -57,7 +63,7 @@ const Dashboard = () => {
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className="heading">PUMP STATUS</h1>
         <div className=" flex gap-x-2">
-          {data?.pumpStatus.map(
+          {StatusData?.pumpStatus.map(
             (e: { status: string; pumpName: string }, index: Key) => {
               return (
                 <div
@@ -96,7 +102,7 @@ const Dashboard = () => {
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className="heading">FLUID LEVEL</h1>
         <div className=" flex gap-x-2">
-          {data?.fluidLevel.map(
+          {StatusData?.fluidLevel.map(
             (e: { status: string; pumpName: string }, index: Key) => {
               return (
                 <div
@@ -116,8 +122,8 @@ const Dashboard = () => {
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className=" heading">WASH CYCLE</h1>
         <div className=" flex gap-x-2">
-          {data?.washCycle &&
-            Object.keys(data.washCycle).map((e, index) => {
+          {StatusData?.washCycle &&
+            Object.keys(StatusData.washCycle).map((e, index) => {
               return (
                 <div
                   key={index}
