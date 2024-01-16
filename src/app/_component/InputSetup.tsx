@@ -26,7 +26,7 @@ const InputSetup = () => {
     // call post edit api here
     try {
       const res = await axios.post(
-        `/api/input/${inputData.inputId}`,
+        `/api/v1/input/${inputData.inputId}`,
         inputData
       );
       console.log(res);
