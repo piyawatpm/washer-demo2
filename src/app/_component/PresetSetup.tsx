@@ -1,4 +1,4 @@
-import { Modal, Select, Switch } from "antd";
+import { Select, Switch, message } from "antd";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { v4 } from "uuid";
@@ -175,11 +175,15 @@ const PresetSetup = () => {
       );
     } else {
       try {
-        const res = axios.delete(`/api/v1/preset/${presetData.presetId}`);
-      } catch (error) {}
-      setPresets((p) =>
-        p.filter((preset) => preset.presetId !== presetData.presetId)
-      );
+        const res = await axios.delete(`/api/v1/preset/${presetData.presetId}`);
+        console.log("response = ", res);
+        message.success('successfully removed')
+        setPresets((p) =>
+          p.filter((preset) => preset.presetId !== presetData.presetId)
+        );
+      } catch (error) {
+        console.log("error =", error);
+      }
     }
   };
   return (
@@ -187,7 +191,7 @@ const PresetSetup = () => {
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className=" heading">PRESET SETUP</h1>
         <div className=" flex flex-col gap-y-5 w-full">
-          {presets?.map((preset, i) => {
+          {presets?.map((preset) => {
             return (
               <div key={preset.presetId} className=" flex flex-col">
                 <div className=" bg-[#F5F5F5] w-full p-[1.35rem] flex items-center justify-between">
@@ -207,7 +211,7 @@ const PresetSetup = () => {
                           }}
                           className={` !bg-green-500 !text-white  cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary flex items-center justify-center`}
                         >
-                          {" "}
+                
                           <p>Save</p>
                         </button>
                         <button
@@ -228,7 +232,6 @@ const PresetSetup = () => {
                         }}
                         className={` cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary text-black flex items-center justify-center`}
                       >
-                        {" "}
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className=" w-[1.2rem] h-[1.2rem]"
@@ -245,10 +248,10 @@ const PresetSetup = () => {
                     )}
                   </div>
                   <div className=" flex gap-x-2 overflow-scroll p-5 ">
-                    {preset?.sequenceData?.map((sequence, i) => {
+                    {preset?.sequenceData?.map((sequence) => {
                       return (
                         <div
-                          key={i}
+                          key={sequence.order}
                           className="  text-[1rem]  w-[12em] font-black flex flex-col items-center justify-center gap-y-4"
                         >
                           <div className="  w-full flex flex-col items-center justify-center gap-y-1">
@@ -299,19 +302,19 @@ const PresetSetup = () => {
                     </div>
                   </div>
                 </div>
-                <div
+                <button
                   onClick={() => {
                     handleRemovePreset(preset);
                   }}
                   className=" w-full flex items-center justify-center bg-red-500 font-bold py-3 text-white cursor-pointer "
                 >
                   <p>REMOVE</p>
-                </div>
+                </button>
               </div>
             );
           })}
         </div>
-        <div
+        <button
           onClick={() => {
             handleAddPreset();
           }}
@@ -326,7 +329,7 @@ const PresetSetup = () => {
             priority
           />
           <p className=" text-[#868686] text-[1.2rem] font-bold">ADD PRESET</p>
-        </div>
+        </button>
       </div>
     </div>
   );

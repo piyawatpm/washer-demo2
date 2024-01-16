@@ -1,18 +1,16 @@
 import { Modal, message } from "antd";
-
 import { useState } from "react";
-import { InputType, useStatus } from "../_swr/useStatus";
 import axios from "axios";
-import { useInput } from "../_swr/useInput";
-
+import { InputType, useInput } from "../_swr/useInput";
+type InputDraft = Partial<InputType>;
 const InputSetup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const initialInput = {
     inputName: "",
     inputMl: 0,
-    inputId: null,
+    inputId: undefined,
   };
-  const [seletedInput, setSelectedInput] = useState<InputType>(initialInput);
+  const [selectedInput, setSelectedInput] = useState<InputDraft>(initialInput);
   const { data, mutate: refetchInputData } = useInput();
 
   const handleCloseModal = () => {
@@ -22,7 +20,7 @@ const InputSetup = () => {
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
-  const handleEditInput = async (inputData: InputType) => {
+  const handleEditInput = async (inputData: InputDraft) => {
     // call post edit api here
     try {
       const res = await axios.post(
@@ -49,7 +47,6 @@ const InputSetup = () => {
         className=" !w-[75rem] !"
         closable={false}
         onCancel={handleCloseModal}
-        bodyStyle={{ height: "100%" }}
       >
         <div className=" flex h-full w-full flex-col items-center justify-center  gap-y-[1.35rem] py-5 ">
           <div className=" w-full flex items-center text-base font-bold px-[7.3rem] flex-col gap-y-10 ">
@@ -57,7 +54,7 @@ const InputSetup = () => {
               <p className=" text-[1.2rem]">Input Name</p>
               <input
                 type="text"
-                value={seletedInput.inputName}
+                value={selectedInput.inputName}
                 onChange={(e) => {
                   setSelectedInput((p) => {
                     return { ...p, inputName: e.target.value };
@@ -70,7 +67,7 @@ const InputSetup = () => {
               <p className=" text-[1.2rem]">ml</p>
               <input
                 type="number"
-                value={seletedInput.inputMl}
+                value={selectedInput.inputMl}
                 onChange={(e) => {
                   setSelectedInput((p) => {
                     return {
@@ -92,7 +89,7 @@ const InputSetup = () => {
             </button>
             <button
               onClick={() => {
-                handleEditInput(seletedInput);
+                handleEditInput(selectedInput);
               }}
               className=" w-[8rem] h-[3.2rem] bg-black "
             >

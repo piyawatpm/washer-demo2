@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Key } from "react";
-import { InputType, useStatus } from "../_swr/useStatus";
+import { WashCycleType, useStatus } from "../_swr/useStatus";
+import { InputType } from "../_swr/useInput";
 
 const Dashboard = () => {
   const { data: StatusData } = useStatus(true);
@@ -10,17 +11,17 @@ const Dashboard = () => {
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className=" heading">INPUT STATUS</h1>
         <div className=" flex gap-x-2">
-          {StatusData?.inputStatus.map((e: InputType, index: Key) => {
+          {StatusData?.inputStatus.map((inputData: InputType, index: Key) => {
             return (
               <div
                 key={index}
                 className={` ${
-                  e.status === "active"
+                  inputData?.status === "active"
                     ? "bg-[#06DE1C] text-white"
                     : "bg-[red] text-white"
                 } py-2 w-[10rem] font-bold rounded-[.25rem]  flex items-center justify-center`}
               >
-                {e.inputName}
+                {inputData?.inputName}
               </div>
             );
           })}
@@ -63,75 +64,71 @@ const Dashboard = () => {
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className="heading">PUMP STATUS</h1>
         <div className=" flex gap-x-2">
-          {StatusData?.pumpStatus.map(
-            (e: { status: string; pumpName: string }, index: Key) => {
-              return (
+          {StatusData?.pumpStatus.map((pumpData, index: Key) => {
+            return (
+              <div
+                key={index}
+                className=" flex flex-col gap-y-[1.4rem] items-center"
+              >
                 <div
-                  key={index}
-                  className=" flex flex-col gap-y-[1.4rem] items-center"
+                  className={`  ${
+                    pumpData.status === "active"
+                      ? "bg-[#06DE1C] text-white"
+                      : "bg-[red] text-white"
+                  } py-2 w-[10rem] font-bold rounded-[.25rem] flex items-center justify-center`}
                 >
-                  <div
-                    className={`  ${
-                      e.status === "active"
-                        ? "bg-[#06DE1C] text-white"
-                        : "bg-[red] text-white"
-                    } py-2 w-[10rem] font-bold rounded-[.25rem] flex items-center justify-center`}
-                  >
-                    {e.pumpName}
-                  </div>
-                  <div className=" flex-1 flex items-center justify-center">
-                    {e.status === "active" ? (
-                      <Image
-                        className=" animate-spin"
-                        src="/pump.png"
-                        alt="pump"
-                        width={71}
-                        height={71}
-                        priority
-                      />
-                    ) : (
-                      <div className=" w-[1.2rem] h-[1.2rem] bg-black rounded-full"></div>
-                    )}
-                  </div>
+                  {pumpData.pumpName}
                 </div>
-              );
-            }
-          )}
+                <div className=" flex-1 flex items-center justify-center">
+                  {pumpData.status === "active" ? (
+                    <Image
+                      className=" animate-spin"
+                      src="/pump.png"
+                      alt="pump"
+                      width={71}
+                      height={71}
+                      priority
+                    />
+                  ) : (
+                    <div className=" w-[1.2rem] h-[1.2rem] bg-black rounded-full"></div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className="heading">FLUID LEVEL</h1>
         <div className=" flex gap-x-2">
-          {StatusData?.fluidLevel.map(
-            (e: { status: string; pumpName: string }, index: Key) => {
-              return (
-                <div
-                  key={index}
-                  className={`${
-                    e.status === "FULL" ? "bg-[#06DE1C]" : "bg-[#FF0404]"
-                  } py-2 w-[10rem] gap-y-2 text-white flex-col  font-bold rounded-[.25rem]  flex items-center justify-center`}
-                >
-                  <p>{e.pumpName}</p>
-                  <p>{e.status}</p>
-                </div>
-              );
-            }
-          )}
+          {StatusData?.fluidLevel.map((FluidLevelData, index: Key) => {
+            return (
+              <div
+                key={index}
+                className={`${
+                  FluidLevelData.status === "FULL" ? "bg-[#06DE1C]" : "bg-[#FF0404]"
+                } py-2 w-[10rem] gap-y-2 text-white flex-col  font-bold rounded-[.25rem]  flex items-center justify-center`}
+              >
+                <p>{FluidLevelData.pumpName}</p>
+                <p>{FluidLevelData.status}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className=" flex flex-col gap-y-[.85rem]">
         <h1 className=" heading">WASH CYCLE</h1>
         <div className=" flex gap-x-2">
           {StatusData?.washCycle &&
-            Object.keys(StatusData.washCycle).map((e, index) => {
+            Object.keys(StatusData.washCycle).map((key, index) => {
               return (
                 <div
                   key={index}
                   className={`py-2 w-[10rem] gap-y-2 text-black flex-col font-bold rounded-[.25rem] bg-[#F5F5F5] flex items-center justify-center`}
                 >
-                  <p className="uppercase">{e}</p>
-                  {/* @ts-ignore */}
-                  <p>{data.washCycle[e]}</p>
+                  <p className="uppercase">{key}</p>
+
+                  <p>{StatusData?.washCycle[key as keyof WashCycleType]}</p>
                 </div>
               );
             })}

@@ -1,17 +1,17 @@
 import axios from "axios";
 import useSWR from "swr";
-export type PumpData = {
+export type PumpType = {
   pumpId: string;
+  pumpName: string;
+  pumpNumber: number;
   inputId: string;
   inputName: string;
-  pumpNumber: number;
   isFlush: boolean;
   stepPerSecond: number;
   stepPerMl: number;
   mlPerKg: number;
-  pumpName: string;
 };
-export type PumpApiData = PumpData[];
+export type PumpData = PumpType[];
 
 export function usePump() {
   const getMockData = async (url: string) => {
@@ -82,18 +82,20 @@ export function usePump() {
         mlPerKg: 6,
         pumpName: "pump name 6",
       },
-    ] as PumpApiData;
+    ] as PumpData;
   };
 
   const fetcher = async (url: string) => {
-    return axios
+    return await axios
       .get(url)
       .then((res) => res.data)
       .catch((error) => {
+        console.log(error)
+        console.log('use mock data')
         return getMockData(url);
       });
   };
 
   console.log("call");
-  return useSWR<PumpApiData>("/api/v1/pump", fetcher);
+  return useSWR<PumpData>("/api/v1/pump", fetcher);
 }

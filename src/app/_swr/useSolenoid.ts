@@ -1,16 +1,18 @@
 import axios from "axios";
 import useSWR from "swr";
+export type FlushType = {
+  isOn:boolean
+  firstTriggerTime:number
+  secondTriggerTime:number
+}
+export type TriggerType={
+  isOn:boolean
+  firstTriggerTime:number
+  secondTriggerTime:number
+}
 export type SolenoidData = {
- flush:{
-    isOn:boolean
-    firstTriggerTime:number
-    secondTriggerTime:number
- }
- trigger:{
-    isOn:boolean
-    firstTriggerTime:number
-    secondTriggerTime:number
- }
+ flush:FlushType
+ trigger:TriggerType
 };
 export function useSolenoid() {
   const getMockData = async (url: string) => {
@@ -29,10 +31,12 @@ export function useSolenoid() {
   };
 
   const fetcher = async (url: string) => {
-    return axios
+    return await axios
       .get(url)
       .then((res) => res.data)
       .catch((error) => {
+        console.log(error)
+        console.log('use mock data')
         return getMockData(url);
       });
   };

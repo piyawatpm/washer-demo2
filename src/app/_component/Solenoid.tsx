@@ -1,4 +1,4 @@
-import { Switch } from "antd";
+import { Switch, message } from "antd";
 import { useEffect, useState } from "react";
 import { SolenoidData, useSolenoid } from "../_swr/useSolenoid";
 import axios from "axios";
@@ -17,7 +17,7 @@ const Solenoid = () => {
       secondTriggerTime: 0,
     },
   });
-  const { data: solenoidData } = useSolenoid();
+  const { data: solenoidData, mutate: refetchSolenoid } = useSolenoid();
   useEffect(() => {
     if (solenoidData) {
       setSolenoid(solenoidData);
@@ -27,6 +27,9 @@ const Solenoid = () => {
   const handleSaveSolenoid = async () => {
     try {
       const res = await axios.post("/api/v1/solenoid", solenoid);
+      console.log(res);
+      await refetchSolenoid();
+      message.success("success");
     } catch (error) {
       console.log(error);
     }
@@ -53,11 +56,13 @@ const Solenoid = () => {
                 value={solenoid?.flush?.firstTriggerTime}
                 type="number"
                 onChange={(e) => {
-                  // @ts-ignore
                   setSolenoid((p) => {
                     return {
                       ...p,
-                      flush: { ...p?.flush, firstTriggerTime: e.target.value },
+                      flush: {
+                        ...p?.flush,
+                        firstTriggerTime: Number(e.target.value),
+                      },
                     };
                   });
                 }}
@@ -70,11 +75,13 @@ const Solenoid = () => {
                 value={solenoid?.flush?.secondTriggerTime}
                 type="number"
                 onChange={(e) => {
-                  // @ts-ignore
                   setSolenoid((p) => {
                     return {
                       ...p,
-                      flush: { ...p?.flush, secondTriggerTime: e.target.value },
+                      flush: {
+                        ...p?.flush,
+                        secondTriggerTime: Number(e.target.value),
+                      },
                     };
                   });
                 }}
@@ -102,13 +109,12 @@ const Solenoid = () => {
                 value={solenoid?.trigger?.firstTriggerTime}
                 type="number"
                 onChange={(e) => {
-                  // @ts-ignore
                   setSolenoid((p) => {
                     return {
                       ...p,
                       trigger: {
                         ...p?.trigger,
-                        firstTriggerTime: e.target.value,
+                        firstTriggerTime: Number(e.target.value),
                       },
                     };
                   });
@@ -122,13 +128,12 @@ const Solenoid = () => {
                 value={solenoid?.trigger?.firstTriggerTime}
                 type="number"
                 onChange={(e) => {
-                  // @ts-ignore
                   setSolenoid((p) => {
                     return {
                       ...p,
                       trigger: {
                         ...p?.trigger,
-                        firstTriggerTime: e.target.value,
+                        firstTriggerTime: Number(e.target.value),
                       },
                     };
                   });
@@ -155,7 +160,6 @@ const Solenoid = () => {
             }}
             className={` cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary text-black flex items-center justify-center`}
           >
-            {" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className=" w-[1.2rem] h-[1.2rem]"
@@ -175,7 +179,6 @@ const Solenoid = () => {
               onClick={handleSaveSolenoid}
               className={` !bg-green-500 !text-white  cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary flex items-center justify-center`}
             >
-              {" "}
               <p>Save</p>
             </button>
             <button

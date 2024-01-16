@@ -4,8 +4,9 @@ export type InputType =  {
    inputId:string,
    inputName:string,
    inputMl:number
+   status?:string
   }
-  type InputData =InputType[];
+type InputData =InputType[];
 export function useInput() {
   const getMockData = async (url: string) => {
     return [ {
@@ -45,14 +46,14 @@ export function useInput() {
   };
 
   const fetcher = async (url: string) => {
-    return axios
+    return await axios
       .get(url)
       .then((res) => res.data)
       .catch((error) => {
+        console.log(error)
+        console.log('use mock data')
         return getMockData(url);
       });
   };
-
-  console.log("call");
   return useSWR<InputData>("/api/v1/input", fetcher);
 }

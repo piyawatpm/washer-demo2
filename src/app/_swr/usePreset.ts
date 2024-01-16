@@ -122,14 +122,15 @@ export function usePreset() {
   };
 
   const fetcher = async (url: string) => {
-    return axios
+    return await axios
       .get(url)
       .then((res) => res.data)
       .catch((error) => {
+        console.log(error)
+        console.log('use mock data')
         return getMockData(url);
       });
   };
 
-  console.log("call");
   return useSWR<PresetData>("/api/v1/preset", fetcher);
 }
