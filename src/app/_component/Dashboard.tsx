@@ -106,7 +106,7 @@ const Dashboard = () => {
               <div
                 key={index}
                 className={`${
-                  FluidLevelData.status === "FULL" ? "bg-[#06DE1C]" : "bg-[#FF0404]"
+                  FluidLevelData.status === "HIGH" ? "bg-[#06DE1C]" : "bg-[#FF0404]"
                 } py-2 w-[10rem] gap-y-2 text-white flex-col  font-bold rounded-[.25rem]  flex items-center justify-center`}
               >
                 <p>{FluidLevelData.pumpName}</p>
