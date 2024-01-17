@@ -42,5 +42,5 @@ export function useSolenoid() {
   };
 
   console.log("call");
-  return useSWR<SolenoidData>("/api/v1/status", fetcher);
+  return useSWR<SolenoidData>("/api/v1/solenoid", fetcher);
 }
