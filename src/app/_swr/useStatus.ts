@@ -102,7 +102,7 @@ export function useStatus(isRevalidate: boolean) {
         {
           pumpId: "1",
           pumpName: "PUMP 1",
-          status: "HIGH",
+          status: "FULL",
         },
         {
           pumpId: "2",
@@ -112,12 +112,12 @@ export function useStatus(isRevalidate: boolean) {
         {
           pumpId: "3",
           pumpName: "PUMP 3",
-          status: "HIGH",
+          status: "FULL",
         },
         {
           pumpId: "4",
           pumpName: "PUMP 4",
-          status: "HIGH",
+          status: "FULL",
         },
         {
           pumpId: "5",
@@ -127,7 +127,7 @@ export function useStatus(isRevalidate: boolean) {
         {
           pumpId: "6",
           pumpName: "PUMP 6",
-          status: "HIGH",
+          status: "FULL",
         },
       ],
       washCycle: {

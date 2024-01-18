@@ -46,7 +46,7 @@ export default function Home() {
             priority
           />
           <p className="text-[1.2rem] text-white font-normal mx-auto">
-            WASHER MATE
+            WASHERMATE
           </p>
         </div>
         <div className="flex ml-auto gap-x-[30px] items-center">
