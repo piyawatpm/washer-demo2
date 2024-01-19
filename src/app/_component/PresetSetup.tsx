@@ -11,8 +11,8 @@ const PresetSetup = () => {
   const [editIds, setEditIds] = useState<string[]>([]);
   const initialPreset = {
     presetId: "1",
-    isFlush: false,
-    isTrigger: false,
+    isFlush: "F" as "T" | "F",
+    isTrigger: "F" as "T" | "F",
     sequenceData: [
       {
         pumpId: null,
@@ -177,7 +177,7 @@ const PresetSetup = () => {
       try {
         const res = await axios.delete(`/api/v1/preset/${presetData.presetId}`);
         console.log("response = ", res);
-        message.success('successfully removed')
+        message.success("successfully removed");
         setPresets((p) =>
           p.filter((preset) => preset.presetId !== presetData.presetId)
         );
@@ -211,7 +211,6 @@ const PresetSetup = () => {
                           }}
                           className={` !bg-green-500 !text-white  cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary flex items-center justify-center`}
                         >
-                
                           <p>Save</p>
                         </button>
                         <button
@@ -294,11 +293,11 @@ const PresetSetup = () => {
                   <div className=" flex items-center gap-x-5 text-[1.2rem] font-black">
                     <div className=" flex flex-col items-center gap-y-2">
                       <p>FLUSH</p>
-                      <Switch checked={preset.isFlush} />
+                      <Switch checked={preset.isFlush === "T"} />
                     </div>
                     <div className=" flex flex-col items-center gap-y-2">
                       <p>TRIGGER</p>
-                      <Switch checked={preset.isTrigger} />
+                      <Switch checked={preset.isTrigger === "T"} />
                     </div>
                   </div>
                 </div>

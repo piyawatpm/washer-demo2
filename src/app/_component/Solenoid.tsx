@@ -7,12 +7,12 @@ const Solenoid = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [solenoid, setSolenoid] = useState<SolenoidData>({
     flush: {
-      isOn: false,
+      isOn: "F",
       firstTriggerTime: 0,
       secondTriggerTime: 0,
     },
     trigger: {
-      isOn: false,
+      isOn: "F",
       firstTriggerTime: 0,
       secondTriggerTime: 0,
     },
@@ -89,10 +89,10 @@ const Solenoid = () => {
               ></input>
             </div>
             <Switch
-              checked={solenoid?.flush?.isOn}
+              checked={solenoid?.flush?.isOn === "T"}
               onChange={(e) =>
                 setSolenoid((p) => {
-                  return { ...p, flush: { ...p?.flush, isOn: e } };
+                  return { ...p, flush: { ...p?.flush, isOn: e ? "T" : "F" } };
                 })
               }
             />
@@ -142,10 +142,13 @@ const Solenoid = () => {
               ></input>
             </div>
             <Switch
-              checked={solenoid?.trigger?.isOn}
+              checked={solenoid?.trigger?.isOn === "T"}
               onChange={(e) =>
                 setSolenoid((p) => {
-                  return { ...p, trigger: { ...p?.trigger, isOn: e } };
+                  return {
+                    ...p,
+                    trigger: { ...p?.trigger, isOn: e ? "T" : "F" },
+                  };
                 })
               }
             />

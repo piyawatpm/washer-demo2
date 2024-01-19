@@ -223,7 +223,7 @@ const PumpSetup = () => {
                   </div>
                 </div>
                 <div className=" flex flex-col items-center gap-y-3 mt-auto">
-                  <Switch checked={pump.isFlush} />
+                  <Switch checked={pump.isFlush === "T"} />
                   <p className=" text-[.8rem] font-bold">Flush</p>
                 </div>
               </div>

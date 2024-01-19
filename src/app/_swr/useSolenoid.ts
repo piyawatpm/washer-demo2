@@ -1,12 +1,12 @@
 import axios from "axios";
 import useSWR from "swr";
 export type FlushType = {
-  isOn:boolean
+  isOn:"T" |"F"
   firstTriggerTime:number
   secondTriggerTime:number
 }
 export type TriggerType={
-  isOn:boolean
+  isOn:"T" |"F"
   firstTriggerTime:number
   secondTriggerTime:number
 }
@@ -18,12 +18,12 @@ export function useSolenoid() {
   const getMockData = async (url: string) => {
     return {
         flush: {
-            isOn: true,
+            isOn: "T",
             firstTriggerTime: 1,
             secondTriggerTime: 2
         },
         trigger: {
-            isOn: true,
+            isOn: "T",
             firstTriggerTime: 1,
             secondTriggerTime: 2
         }

@@ -6,7 +6,7 @@ export type PumpType = {
   pumpNumber: number;
   inputId: string;
   inputName: string;
-  isFlush: boolean;
+  isFlush: "T"|"F";
   stepPerSecond: number;
   stepPerMl: number;
   mlPerKg: number;
@@ -21,7 +21,7 @@ export function usePump() {
         inputId: "1",
         inputName: "Detergent",
         pumpNumber: 1,
-        isFlush: true,
+        isFlush: "T",
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 1,
@@ -32,7 +32,7 @@ export function usePump() {
         inputId: "2",
         inputName: "Softener",
         pumpNumber: 2,
-        isFlush: true,
+        isFlush: "T",
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 2,
@@ -43,7 +43,7 @@ export function usePump() {
         inputId: "3",
         inputName: "Detergent",
         pumpNumber: 3,
-        isFlush: false,
+        isFlush: "F",
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 3,
@@ -54,7 +54,7 @@ export function usePump() {
         inputId: "4",
         inputName: "INPUT 4",
         pumpNumber: 4,
-        isFlush: true,
+        isFlush: "T",
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 4,
@@ -65,7 +65,7 @@ export function usePump() {
         inputId: "5",
         inputName: "INPUT 5",
         pumpNumber: 5,
-        isFlush: false,
+        isFlush: "F",
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 5,
@@ -76,7 +76,7 @@ export function usePump() {
         inputId: "6",
         inputName: "INPUT 6",
         pumpNumber: 6,
-        isFlush: true,
+        isFlush: "T",
         stepPerSecond: 320,
         stepPerMl: 320,
         mlPerKg: 6,
