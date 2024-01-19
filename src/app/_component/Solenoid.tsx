@@ -22,18 +22,18 @@ const Solenoid = () => {
     if (solenoidData) {
       setSolenoid(solenoidData);
     }
-    console.log("solenoidData", solenoidData);
+    console.log("update data solenoidData", solenoidData);
   }, [solenoidData]);
   const handleSaveSolenoid = async () => {
     try {
       const res = await axios.post("/api/v1/solenoid", solenoid);
       console.log(res);
-      await refetchSolenoid();
 
       message.success("success");
     } catch (error) {
       console.log(error);
     } finally {
+      await refetchSolenoid();
       setIsEdit(false);
     }
   };
@@ -58,6 +58,7 @@ const Solenoid = () => {
               <input
                 value={solenoid?.flush?.firstTriggerTime}
                 type="number"
+                disabled={!isEdit}
                 onChange={(e) => {
                   setSolenoid((p) => {
                     return {
@@ -76,6 +77,7 @@ const Solenoid = () => {
               <p className=" text-[1.2rem] font-black">Second Trigger Time</p>
               <input
                 value={solenoid?.flush?.secondTriggerTime}
+                disabled={!isEdit}
                 type="number"
                 onChange={(e) => {
                   setSolenoid((p) => {
@@ -93,6 +95,7 @@ const Solenoid = () => {
             </div>
             <Switch
               checked={solenoid?.flush?.isOn === "T"}
+              disabled={!isEdit}
               onChange={(e) =>
                 setSolenoid((p) => {
                   return { ...p, flush: { ...p?.flush, isOn: e ? "T" : "F" } };
@@ -111,6 +114,7 @@ const Solenoid = () => {
               <input
                 value={solenoid?.trigger?.firstTriggerTime}
                 type="number"
+                disabled={!isEdit}
                 onChange={(e) => {
                   setSolenoid((p) => {
                     return {
@@ -129,6 +133,7 @@ const Solenoid = () => {
               <p className=" text-[1.2rem] font-black">Second Trigger Time</p>
               <input
                 value={solenoid?.trigger?.secondTriggerTime}
+                disabled={!isEdit}
                 type="number"
                 onChange={(e) => {
                   setSolenoid((p) => {
@@ -146,6 +151,7 @@ const Solenoid = () => {
             </div>
             <Switch
               checked={solenoid?.trigger?.isOn === "T"}
+              disabled={!isEdit}
               onChange={(e) =>
                 setSolenoid((p) => {
                   return {

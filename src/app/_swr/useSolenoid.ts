@@ -19,13 +19,13 @@ export function useSolenoid() {
     return {
         flush: {
             isOn: "T",
-            firstTriggerTime: 1,
-            secondTriggerTime: 2
+            firstTriggerTime: 10,
+            secondTriggerTime: 20
         },
         trigger: {
             isOn: "T",
-            firstTriggerTime: 1,
-            secondTriggerTime: 2
+            firstTriggerTime: 30,
+            secondTriggerTime: 40
         }
     }as SolenoidData;
   };
