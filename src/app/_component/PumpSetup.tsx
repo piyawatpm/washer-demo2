@@ -74,6 +74,20 @@ const PumpSetup = () => {
       handleCloseModal();
     }
   };
+  const handleTogglePump = async (targetBoolean: boolean, pump: PumpType) => {
+    try {
+      const res = await axios.post(`/api/v1/pump/${pump?.pumpNumber}`, {
+        ...pump,
+        isFlush: targetBoolean ? "T" : "F",
+      });
+      console.log(res);
+      await refetchPumpData();
+      message.success("success");
+    } catch (error) {
+      console.log(error);
+      message.error(error as string);
+    }
+  };
   return (
     <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[2rem]">
       <Modal
@@ -223,7 +237,12 @@ const PumpSetup = () => {
                   </div>
                 </div>
                 <div className=" flex flex-col items-center gap-y-3 mt-auto">
-                  <Switch checked={pump.isFlush === "T"} />
+                  <Switch
+                    onChange={(bool) => {
+                      handleTogglePump(bool, pump);
+                    }}
+                    checked={pump.isFlush === "T"}
+                  />
                   <p className=" text-[.8rem] font-bold">Flush</p>
                 </div>
               </div>
