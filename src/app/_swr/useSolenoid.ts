@@ -41,6 +41,6 @@ export function useSolenoid() {
       });
   };
 
-  console.log("call");
+  console.log("call solenoid get api");
   return useSWR<SolenoidData>("/api/v1/solenoid", fetcher);
 }

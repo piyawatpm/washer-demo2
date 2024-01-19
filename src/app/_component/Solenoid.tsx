@@ -28,12 +28,15 @@ const Solenoid = () => {
     try {
       const res = await axios.post("/api/v1/solenoid", solenoid);
       console.log(res);
-
       message.success("success");
     } catch (error) {
+      message.error("error");
       console.log(error);
     } finally {
       await refetchSolenoid();
+      if (solenoidData) {
+        setSolenoid(solenoidData);
+      }
       setIsEdit(false);
     }
   };
