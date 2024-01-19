@@ -29,9 +29,12 @@ const Solenoid = () => {
       const res = await axios.post("/api/v1/solenoid", solenoid);
       console.log(res);
       await refetchSolenoid();
+
       message.success("success");
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsEdit(false);
     }
   };
   const handleCancel = () => {
@@ -125,7 +128,7 @@ const Solenoid = () => {
             <div className=" flex items-center gap-x-[1.65rem]">
               <p className=" text-[1.2rem] font-black">Second Trigger Time</p>
               <input
-                value={solenoid?.trigger?.firstTriggerTime}
+                value={solenoid?.trigger?.secondTriggerTime}
                 type="number"
                 onChange={(e) => {
                   setSolenoid((p) => {
@@ -133,7 +136,7 @@ const Solenoid = () => {
                       ...p,
                       trigger: {
                         ...p?.trigger,
-                        firstTriggerTime: Number(e.target.value),
+                        secondTriggerTime: Number(e.target.value),
                       },
                     };
                   });
