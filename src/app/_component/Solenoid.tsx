@@ -24,22 +24,30 @@ const Solenoid = () => {
     }
     console.log("update data solenoidData", solenoidData);
   }, [solenoidData]);
-  const handleSaveSolenoid = async () => {
-    try {
-      const res = await axios.post("/api/v1/solenoid", solenoid);
-      console.log(res);
-      message.success("success");
-      await refetchSolenoid();
-      if (solenoidData) {
-        setSolenoid(solenoidData);
-      }
-    } catch (error) {
-      message.error("error");
-      console.log(error);
-    } finally {
- 
-      setIsEdit(false);
-    }
+  const handleSaveSolenoid = () => {
+    const res = axios
+      .post("/api/v1/solenoid", solenoid)
+      .then(() => {
+        console.log('with then')
+        console.log("Before axios.post");
+        console.log("After axios.post");
+        console.log(res);
+        message.success("success");
+        console.log("Before refetchSolenoid");
+        refetchSolenoid();
+        console.log("After refetchSolenoid");
+        if (solenoidData) {
+          console.log("force to set data");
+          setSolenoid(solenoidData);
+        }
+      })
+      .catch((error) => {
+        message.error("error");
+        console.log(error);
+      })
+      .finally(() => {
+        setIsEdit(false);
+      });
   };
   const handleCancel = () => {
     console.log("call");
