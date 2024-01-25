@@ -6,6 +6,7 @@ import PumpSetup from "./_component/PumpSetup";
 import Solenoid from "./_component/Solenoid";
 import InputSetUp from "./_component/InputSetup";
 import PresetSetup from "./_component/PresetSetup";
+import Network from "./_component/Network";
 
 enum Menu {
   DASHBOARD = "DASHBOARD",
@@ -13,6 +14,7 @@ enum Menu {
   PRESET_SETUP = "PRESET SETUP",
   SOLENOID = "SOLENOID",
   INPUT_SETUP = "INPUT SETUP",
+  NETWORK = "NETWORK",
 }
 export default function Home() {
   const [currentMenu, setCurrentMenu] = useState<Menu>(Menu.DASHBOARD);
@@ -29,6 +31,8 @@ export default function Home() {
         return <PresetSetup />;
       case Menu.SOLENOID:
         return <Solenoid />;
+      case Menu.NETWORK:
+        return <Network />;
       default:
         return null; // or handle the unknown case appropriately
     }

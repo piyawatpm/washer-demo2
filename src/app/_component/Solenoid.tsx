@@ -28,7 +28,7 @@ const Solenoid = () => {
     const res = axios
       .post("/api/v1/solenoid", solenoid)
       .then(() => {
-        console.log('with then')
+        console.log("with then");
         console.log("Before axios.post");
         console.log("After axios.post");
         console.log(res);
@@ -66,7 +66,7 @@ const Solenoid = () => {
           </h1>
           <div className=" flex-1 pl-[10rem] flex items-center justify-between">
             <div className=" flex items-center gap-x-[1.65rem]">
-              <p className=" text-[1.2rem] font-black">First Trigger Time</p>
+              <p className=" text-[1.2rem] font-black">Pre Wash Trigger</p>
               <input
                 value={solenoid?.flush?.firstTriggerTime}
                 type="number"
@@ -86,7 +86,7 @@ const Solenoid = () => {
               ></input>
             </div>
             <div className=" flex items-center gap-x-[1.65rem]">
-              <p className=" text-[1.2rem] font-black">Second Trigger Time</p>
+              <p className=" text-[1.2rem] font-black">Post Wash Trigger</p>
               <input
                 value={solenoid?.flush?.secondTriggerTime}
                 disabled={!isEdit}
@@ -116,7 +116,7 @@ const Solenoid = () => {
             />
           </div>
         </div>
-        <div className=" w-full flex items-center bg-[#F5F5F5] py-[1.65rem] px-[3.25rem]">
+        <div className=" w-full flex items-center bg-[#F5F5F5] py-[1.65rem] px-[3.25rem] opacity-20">
           <h1 className=" text-[2rem] text-[#868686] font-black w-[6rem] ">
             Trigger
           </h1>
@@ -126,7 +126,8 @@ const Solenoid = () => {
               <input
                 value={solenoid?.trigger?.firstTriggerTime}
                 type="number"
-                disabled={!isEdit}
+                // disabled={!isEdit}
+                disabled
                 onChange={(e) => {
                   setSolenoid((p) => {
                     return {
@@ -145,7 +146,9 @@ const Solenoid = () => {
               <p className=" text-[1.2rem] font-black">Second Trigger Time</p>
               <input
                 value={solenoid?.trigger?.secondTriggerTime}
-                disabled={!isEdit}
+                // disabled={!isEdit}
+                // disabled={!isEdit}
+                disabled
                 type="number"
                 onChange={(e) => {
                   setSolenoid((p) => {
