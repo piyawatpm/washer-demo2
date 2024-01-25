@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { Switch } from "antd";
+import { Switch, message } from "antd";
 import { useEffect, useState } from "react";
 import { SolenoidData, useSolenoid } from "../_swr/useSolenoid";
 import axios from "axios";
@@ -8,29 +7,47 @@ const Solenoid = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [solenoid, setSolenoid] = useState<SolenoidData>({
     flush: {
-      isOn: false,
+      isOn: "F",
       firstTriggerTime: 0,
       secondTriggerTime: 0,
     },
     trigger: {
-      isOn: false,
+      isOn: "F",
       firstTriggerTime: 0,
       secondTriggerTime: 0,
     },
   });
-  const { data: solenoidData } = useSolenoid();
+  const { data: solenoidData, mutate: refetchSolenoid } = useSolenoid();
   useEffect(() => {
     if (solenoidData) {
       setSolenoid(solenoidData);
     }
-    console.log("solenoidData", solenoidData);
+    console.log("update data solenoidData", solenoidData);
   }, [solenoidData]);
-  const handleSaveSolenoid = async () => {
-    try {
-      const res = await axios.post("/api/v1/solenoid", solenoid);
-    } catch (error) {
-      console.log(error);
-    }
+  const handleSaveSolenoid = () => {
+    const res = axios
+      .post("/api/v1/solenoid", solenoid)
+      .then(() => {
+        console.log('with then')
+        console.log("Before axios.post");
+        console.log("After axios.post");
+        console.log(res);
+        message.success("success");
+        console.log("Before refetchSolenoid");
+        refetchSolenoid();
+        console.log("After refetchSolenoid");
+        if (solenoidData) {
+          console.log("force to set data");
+          setSolenoid(solenoidData);
+        }
+      })
+      .catch((error) => {
+        message.error("error");
+        console.log(error);
+      })
+      .finally(() => {
+        setIsEdit(false);
+      });
   };
   const handleCancel = () => {
     console.log("call");
@@ -53,12 +70,15 @@ const Solenoid = () => {
               <input
                 value={solenoid?.flush?.firstTriggerTime}
                 type="number"
+                disabled={!isEdit}
                 onChange={(e) => {
-                  // @ts-ignore
                   setSolenoid((p) => {
                     return {
                       ...p,
-                      flush: { ...p?.flush, firstTriggerTime: e.target.value },
+                      flush: {
+                        ...p?.flush,
+                        firstTriggerTime: Number(e.target.value),
+                      },
                     };
                   });
                 }}
@@ -69,13 +89,16 @@ const Solenoid = () => {
               <p className=" text-[1.2rem] font-black">Second Trigger Time</p>
               <input
                 value={solenoid?.flush?.secondTriggerTime}
+                disabled={!isEdit}
                 type="number"
                 onChange={(e) => {
-                  // @ts-ignore
                   setSolenoid((p) => {
                     return {
                       ...p,
-                      flush: { ...p?.flush, secondTriggerTime: e.target.value },
+                      flush: {
+                        ...p?.flush,
+                        secondTriggerTime: Number(e.target.value),
+                      },
                     };
                   });
                 }}
@@ -83,10 +106,11 @@ const Solenoid = () => {
               ></input>
             </div>
             <Switch
-              checked={solenoid?.flush?.isOn}
+              checked={solenoid?.flush?.isOn === "T"}
+              disabled={!isEdit}
               onChange={(e) =>
                 setSolenoid((p) => {
-                  return { ...p, flush: { ...p?.flush, isOn: e } };
+                  return { ...p, flush: { ...p?.flush, isOn: e ? "T" : "F" } };
                 })
               }
             />
@@ -102,14 +126,14 @@ const Solenoid = () => {
               <input
                 value={solenoid?.trigger?.firstTriggerTime}
                 type="number"
+                disabled={!isEdit}
                 onChange={(e) => {
-                  // @ts-ignore
                   setSolenoid((p) => {
                     return {
                       ...p,
                       trigger: {
                         ...p?.trigger,
-                        firstTriggerTime: e.target.value,
+                        firstTriggerTime: Number(e.target.value),
                       },
                     };
                   });
@@ -120,16 +144,16 @@ const Solenoid = () => {
             <div className=" flex items-center gap-x-[1.65rem]">
               <p className=" text-[1.2rem] font-black">Second Trigger Time</p>
               <input
-                value={solenoid?.trigger?.firstTriggerTime}
+                value={solenoid?.trigger?.secondTriggerTime}
+                disabled={!isEdit}
                 type="number"
                 onChange={(e) => {
-                  // @ts-ignore
                   setSolenoid((p) => {
                     return {
                       ...p,
                       trigger: {
                         ...p?.trigger,
-                        firstTriggerTime: e.target.value,
+                        secondTriggerTime: Number(e.target.value),
                       },
                     };
                   });
@@ -138,10 +162,14 @@ const Solenoid = () => {
               ></input>
             </div>
             <Switch
-              checked={solenoid?.trigger?.isOn}
+              checked={solenoid?.trigger?.isOn === "T"}
+              disabled={!isEdit}
               onChange={(e) =>
                 setSolenoid((p) => {
-                  return { ...p, trigger: { ...p?.trigger, isOn: e } };
+                  return {
+                    ...p,
+                    trigger: { ...p?.trigger, isOn: e ? "T" : "F" },
+                  };
                 })
               }
             />
@@ -156,7 +184,6 @@ const Solenoid = () => {
             }}
             className={` cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary text-black flex items-center justify-center`}
           >
-            {" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className=" w-[1.2rem] h-[1.2rem]"
@@ -176,7 +203,6 @@ const Solenoid = () => {
               onClick={handleSaveSolenoid}
               className={` !bg-green-500 !text-white  cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary flex items-center justify-center`}
             >
-              {" "}
               <p>Save</p>
             </button>
             <button

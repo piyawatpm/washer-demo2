@@ -6,78 +6,69 @@ import PumpSetup from "./_component/PumpSetup";
 import Solenoid from "./_component/Solenoid";
 import InputSetUp from "./_component/InputSetup";
 import PresetSetup from "./_component/PresetSetup";
-type Menu =
-  | "DASHBOARD"
-  | "PUMP SETUP"
-  | "PRESET SETUP"
-  | "SOLENOID"
-  | "INPUT SETUP";
+
+enum Menu {
+  DASHBOARD = "DASHBOARD",
+  PUMP_SETUP = "PUMP SETUP",
+  PRESET_SETUP = "PRESET SETUP",
+  SOLENOID = "SOLENOID",
+  INPUT_SETUP = "INPUT SETUP",
+}
 export default function Home() {
-  const [currentMenu, setCurrentMenu] = useState<Menu>("DASHBOARD");
+  const [currentMenu, setCurrentMenu] = useState<Menu>(Menu.DASHBOARD);
+
   const renderTab = useMemo(() => {
     switch (currentMenu) {
-      case "DASHBOARD":
+      case Menu.DASHBOARD:
         return <Dashboard />;
-      case "INPUT SETUP":
+      case Menu.INPUT_SETUP:
         return <InputSetUp />;
-      case "PUMP SETUP":
+      case Menu.PUMP_SETUP:
         return <PumpSetup />;
-      case "PRESET SETUP":
+      case Menu.PRESET_SETUP:
         return <PresetSetup />;
-      case "SOLENOID":
+      case Menu.SOLENOID:
         return <Solenoid />;
       default:
-        break;
+        return null; // or handle the unknown case appropriately
     }
   }, [currentMenu]);
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-white ">
-      <div className=" w-full h-[120px] bg-[#1867C0] flex  items-center px-[5.5rem]">
-        <div className=" flex items-center gap-x-3">
+    <main className="flex min-h-screen flex-col items-center justify-between bg-white">
+      <div className="w-full h-[120px] bg-[#1867C0] flex items-center px-[5.5rem]">
+        <div className="flex items-center gap-x-3">
           <Image
-            className=""
             src="/logo.png"
-            alt="Next.js Logo"
+            alt="Washer Mate Logo" // Provide a meaningful alt tag
             width={244}
             height={67}
             priority
           />
-          <p className=" text-[1.2rem] text-white font-normal mx-auto">
-            WASHER MATE
+          <p className="text-[1.2rem] text-white font-normal mx-auto">
+            WASHERMATE
           </p>
         </div>
-        <div className=" flex ml-auto gap-x-[30px] items-center">
-          {[
-            "DASHBOARD",
-            "PUMP SETUP",
-            "INPUT SETUP",
-
-            "PRESET SETUP",
-            "SOLENOID",
-          ].map((e, index) => {
-            return (
+        <div className="flex ml-auto gap-x-[30px] items-center">
+          {Object.values(Menu).map((menuOption, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentMenu(menuOption)}
+              className={`flex flex-col text-[1.15rem] font-bold cursor-pointer text-white ${
+                currentMenu !== menuOption && "opacity-50"
+              }`}
+            >
+              <p>{menuOption}</p>
               <div
-                onClick={() => {
-                  setCurrentMenu(e as Menu);
-                }}
-                key={index}
-                className={` flex flex-col text-[1.15rem] font-bold cursor-pointer text-white ${
-                  currentMenu !== e && "opacity-50"
+                className={`w-full h-[.45rem] bg-white transition-all ${
+                  currentMenu !== menuOption && "opacity-0"
                 }`}
-              >
-                <p>{e}</p>
-
-                <div
-                  className={`w-full h-[.45rem] bg-white transition-all ${
-                    currentMenu !== e && "opacity-0"
-                  }`}
-                />
-              </div>
-            );
-          })}
+              />
+            </button>
+          ))}
         </div>
       </div>
-      <div className=" flex flex-col w-full flex-1 pt-7 tracking-wide-[.32rem] px-[5.5rem]">
+      <div className="flex flex-col w-full flex-1 pt-7 tracking-wide-[.32rem] px-[5.5rem]">
         {renderTab}
       </div>
     </main>

@@ -1,11 +1,11 @@
 import axios from "axios";
 import useSWR from "swr";
 export type PresetType =  {
-  // for case add new if false = edit preset
+  // for case add new if "F" = edit preset
   isNew?:boolean
   presetId: string;
-  isFlush: boolean;
-  isTrigger: boolean;
+  isFlush: "T" | "F";
+  isTrigger: "T" | "F";
   sequenceData: {
     pumpId: string | null;
     order: number;
@@ -23,8 +23,8 @@ export function usePreset() {
     return [
       {
         presetId: "1",
-        isFlush: true,
-        isTrigger: false,
+        isFlush: "T",
+        isTrigger: "F",
         sequenceData: [
           {
             pumpId: "1",
@@ -122,14 +122,15 @@ export function usePreset() {
   };
 
   const fetcher = async (url: string) => {
-    return axios
+    return await axios
       .get(url)
       .then((res) => res.data)
       .catch((error) => {
+        console.log(error)
+        console.log('use mock data')
         return getMockData(url);
       });
   };
 
-  console.log("call");
   return useSWR<PresetData>("/api/v1/preset", fetcher);
 }

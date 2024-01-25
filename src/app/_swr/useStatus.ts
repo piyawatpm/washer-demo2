@@ -1,29 +1,28 @@
 import axios from "axios";
 import useSWR from "swr";
-export type InputType = {
-  inputId: string | null;
-  inputName: string;
-  status?: string;
-  inputMl: number;
+import { InputType } from "./useInput";
+
+export type WashCycleType= {
+  daily: number;
+  weekly: number;
+  monthly: number;
+}
+export type PumpStatusType={
+  pumpId: string;
+  pumpName: string;
+  status: string;
+}
+export type FluidLevelType={
+  pumpId: string;
+  pumpName: string;
+  status: string;
 }
 type StatusData = {
   status: string;
   inputStatus: InputType[];
-  pumpStatus: {
-    pumpId: string;
-    pumpName: string;
-    status: string;
-  }[];
-  fluidLevel: {
-    pumpId: string;
-    pumpName: string;
-    status: string;
-  }[];
-  washCycle: {
-    daily: number;
-    weekly: number;
-    monthly: number;
-  };
+  pumpStatus: PumpStatusType[];
+  fluidLevel: FluidLevelType[];
+  washCycle:WashCycleType;
 };
 export function useStatus(isRevalidate: boolean) {
   const getMockData = async (url: string) => {
@@ -52,7 +51,7 @@ export function useStatus(isRevalidate: boolean) {
           inputId: "4",
           inputName: "INPUT 4",
           status: "inactive",
-          inputMl: 1,
+          inputMl: 2,
         },
         {
           inputId: "5",
@@ -140,10 +139,12 @@ export function useStatus(isRevalidate: boolean) {
   };
 
   const fetcher = async (url: string) => {
-    return axios
+    return await axios
       .get(url)
       .then((res) => res.data)
       .catch((error) => {
+        console.log('use mock data')
+        console.log(error)
         return getMockData(url);
       });
   };

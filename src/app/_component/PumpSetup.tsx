@@ -1,28 +1,25 @@
-import Image from "next/image";
 import { Switch, Modal, Select, message } from "antd";
 import { useMemo, useState } from "react";
 
-import { PumpData, usePump } from "../_swr/usePump";
+import { PumpType, usePump } from "../_swr/usePump";
 import axios from "axios";
 
 const PumpSetup = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentPump, setCurrentPump] = useState<undefined | PumpData>(
-    undefined
-  );
+  const [currentPump, setCurrentPump] = useState<PumpType | null>(null);
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setCurrentPump(undefined);
+    setCurrentPump(null);
   };
-  const { data } = usePump();
+  const { data: pumpData, mutate: refetchPumpData } = usePump();
 
   const inputOption = useMemo(() => {
-    if (data) {
-      return data.map((pump) => {
+    if (pumpData) {
+      return pumpData.map((pump) => {
         return { value: pump.pumpId, label: pump.inputName };
       });
     }
-  }, [data]);
+  }, [pumpData]);
   console.log("inputOption", inputOption);
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -42,6 +39,7 @@ const PumpSetup = () => {
         ...currentPump,
       });
       console.log(res);
+      await refetchPumpData();
       message.success("success");
     } catch (error) {
       console.log(error);
@@ -54,7 +52,7 @@ const PumpSetup = () => {
     targetPumpNumber: number,
     newInputId: string
   ) => {
-    const currentPumpData = data?.find(
+    const currentPumpData = pumpData?.find(
       (pump) => pump.pumpNumber === targetPumpNumber
     );
     console.log("call handle Change input");
@@ -76,21 +74,31 @@ const PumpSetup = () => {
       handleCloseModal();
     }
   };
+  const handleTogglePump = async (targetBoolean: boolean, pump: PumpType) => {
+    try {
+      const res = await axios.post(`/api/v1/pump/${pump?.pumpNumber}`, {
+        ...pump,
+        isFlush: targetBoolean ? "T" : "F",
+      });
+      console.log(res);
+      await refetchPumpData();
+      message.success("success");
+    } catch (error) {
+      console.log(error);
+      message.error(error as string);
+    }
+  };
   return (
     <div className=" w-full h-[1000px]  flex flex-col text-base gap-y-[2rem]">
       <Modal
         title=""
         open={isModalOpen}
-        // onOk={handleOk}
         closeIcon={null}
-        // style={{ backgroundColor: 'transparent' }}
         centered
         footer={null}
-        // onCancel={handleCancel}
         className=" !w-[75rem] !"
         closable={false}
         onCancel={handleCloseModal}
-        bodyStyle={{ height: "100%" }}
       >
         <div className=" flex h-full w-full flex-col items-center justify-center  gap-y-[1.35rem]  ">
           <div className=" text-[1.4rem] font-black  ">OUTPUT 1</div>
@@ -105,8 +113,8 @@ const PumpSetup = () => {
                     if (p) {
                       return {
                         ...p,
-                        stepPerSecond: e.target.value,
-                      } as unknown as PumpData;
+                        stepPerSecond: Number(e.target.value),
+                      } as unknown as PumpType;
                     } else return p;
                   });
                 }}
@@ -124,8 +132,8 @@ const PumpSetup = () => {
                     if (p) {
                       return {
                         ...p,
-                        stepPerMl: e.target.value,
-                      } as unknown as PumpData;
+                        stepPerMl: Number(e.target.value),
+                      } as unknown as PumpType;
                     } else return p;
                   });
                 }}
@@ -142,8 +150,8 @@ const PumpSetup = () => {
                     if (p) {
                       return {
                         ...p,
-                        mlPerKg: e.target.value,
-                      } as unknown as PumpData;
+                        mlPerKg: Number(e.target.value),
+                      } as unknown as PumpType;
                     } else return p;
                   });
                 }}
@@ -170,15 +178,15 @@ const PumpSetup = () => {
       </Modal>
       <h1 className="heading">PUMP</h1>
       <div className=" flex w-full items-center justify-between max-w-screen-xl">
-        {data?.map((e, i) => {
+        {pumpData?.map((pump, i) => {
           return (
             <div key={i} className=" h-[600px] flex flex-col gap-y-2">
               <Select
                 className=" !w-full !font-bold rounded-[.25rem] !bg-[#F5F5F5] text-black flex items-center justify-center"
-                defaultValue={e.inputName}
+                defaultValue={pump.inputName}
                 style={{ width: 120 }}
                 onChange={async (value: string) => {
-                  await handleChangeInput(e.pumpNumber, value);
+                  await handleChangeInput(pump.pumpNumber, value);
                 }}
                 showSearch
                 onSearch={onSearch}
@@ -188,7 +196,7 @@ const PumpSetup = () => {
 
               <button
                 onClick={() => {
-                  setCurrentPump(e);
+                  setCurrentPump(pump);
                   handleOpenModal();
                 }}
                 className=" cursor-pointer gap-x-[.3rem] py-2 w-[10rem] font-bold rounded-[.25rem] button-primary text-black flex items-center justify-center"
@@ -207,29 +215,34 @@ const PumpSetup = () => {
                 <p>Edit</p>
               </button>
               <div className=" flex-1 flex flex-col items-center bg-[#F5F5F5] w-full rounded-[.25rem] pt-[.85rem] pb-[1.85rem]">
-                <h1 className=" text-[1.2rem] font-black">{e.pumpName}</h1>
+                <h1 className=" text-[1.2rem] font-black">{pump.pumpName}</h1>
                 <div className=" mt-[1.35rem] flex flex-col gap-y-[1.35rem]">
                   <div className=" flex flex-col gap-y-1 items-center">
                     <h2 className=" text-[#868686] text-[2rem] font-black">
-                      320
+                      {pump.stepPerSecond}
                     </h2>
                     <p className="  text-[.8rem] font-bold">Step Per Second</p>
                   </div>
                   <div className=" flex flex-col gap-y-1 items-center">
                     <h2 className=" text-[#868686] text-[2rem] font-black">
-                      320
+                      {pump.stepPerMl}
                     </h2>
                     <p className="  text-[.8rem] font-bold">Steps per ml.</p>
                   </div>
                   <div className=" flex flex-col gap-y-1 items-center">
                     <h2 className=" text-[#868686] text-[2rem] font-black">
-                      1
+                      {pump.mlPerKg}
                     </h2>
                     <p className="  text-[.8rem] font-bold">ml per kg</p>
                   </div>
                 </div>
                 <div className=" flex flex-col items-center gap-y-3 mt-auto">
-                  <Switch checked={e.isFlush} />
+                  <Switch
+                    onChange={(bool) => {
+                      handleTogglePump(bool, pump);
+                    }}
+                    checked={pump.isFlush === "T"}
+                  />
                   <p className=" text-[.8rem] font-bold">Flush</p>
                 </div>
               </div>
