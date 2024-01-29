@@ -9,8 +9,8 @@ const Solenoid = () => {
     flush: {
       isPreWashOn: "F",
       isPostWashOn: "F",
-      firstTriggerTime: 0,
-      secondTriggerTime: 0,
+      preWashTriggerTime: 0,
+      postWashTriggerTime: 0,
     },
     trigger: {
       isOn: "F",
@@ -69,7 +69,7 @@ const Solenoid = () => {
             <div className=" flex items-center gap-x-[1.65rem]">
               <p className=" text-[1.2rem] font-black">Pre Wash Trigger</p>
               <input
-                value={solenoid?.flush?.firstTriggerTime}
+                value={solenoid?.flush?.preWashTriggerTime}
                 type="number"
                 disabled={!isEdit}
                 onChange={(e) => {
@@ -78,7 +78,7 @@ const Solenoid = () => {
                       ...p,
                       flush: {
                         ...p?.flush,
-                        firstTriggerTime: Number(e.target.value),
+                        preWashTriggerTime: Number(e.target.value),
                       },
                     };
                   });
@@ -101,7 +101,7 @@ const Solenoid = () => {
             <div className=" flex items-center gap-x-[1.65rem]">
               <p className=" text-[1.2rem] font-black">Post Wash Trigger</p>
               <input
-                value={solenoid?.flush?.secondTriggerTime}
+                value={solenoid?.flush?.postWashTriggerTime}
                 disabled={!isEdit}
                 type="number"
                 onChange={(e) => {
@@ -110,7 +110,7 @@ const Solenoid = () => {
                       ...p,
                       flush: {
                         ...p?.flush,
-                        secondTriggerTime: Number(e.target.value),
+                        postWashTriggerTime: Number(e.target.value),
                       },
                     };
                   });
@@ -182,7 +182,7 @@ const Solenoid = () => {
             </div>
             <Switch
               checked={solenoid?.trigger?.isOn === "T"}
-              disabled={!isEdit}
+              disabled
               onChange={(e) =>
                 setSolenoid((p) => {
                   return {

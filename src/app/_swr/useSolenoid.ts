@@ -3,8 +3,8 @@ import useSWR from "swr";
 export type FlushType = {
   isPreWashOn:"T" |"F"
   isPostWashOn:"T" |"F"
-  firstTriggerTime:number
-  secondTriggerTime:number
+  preWashTriggerTime:number
+  postWashTriggerTime:number
 }
 export type TriggerType={
   isOn:"T" |"F"
@@ -21,8 +21,8 @@ export function useSolenoid() {
         flush: {
           isPreWashOn: "F",
           isPostWashOn:"F",
-            firstTriggerTime: 10,
-            secondTriggerTime: 20
+          preWashTriggerTime: 10,
+          postWashTriggerTime: 20
         },
         trigger: {
             isOn: "T",
