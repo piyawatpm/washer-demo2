@@ -7,10 +7,10 @@ const Solenoid = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [solenoid, setSolenoid] = useState<SolenoidData>({
     flush: {
-      isPreWashOn: "F",
-      isPostWashOn: "F",
-      preWashTriggerTime: 0,
-      postWashTriggerTime: 0,
+      isPreFlushOn: "F",
+      isPostFlushOn: "F",
+      preFlushTriggerTime: 0,
+      postFlushTriggerTime: 0,
     },
     trigger: {
       isOn: "F",
@@ -69,7 +69,7 @@ const Solenoid = () => {
             <div className=" flex items-center gap-x-[1.65rem]">
               <p className=" text-[1.2rem] font-black">Pre Wash Trigger</p>
               <input
-                value={solenoid?.flush?.preWashTriggerTime}
+                value={solenoid?.flush?.preFlushTriggerTime}
                 type="number"
                 disabled={!isEdit}
                 onChange={(e) => {
@@ -78,7 +78,7 @@ const Solenoid = () => {
                       ...p,
                       flush: {
                         ...p?.flush,
-                        preWashTriggerTime: Number(e.target.value),
+                        preFlushTriggerTime: Number(e.target.value),
                       },
                     };
                   });
@@ -86,13 +86,13 @@ const Solenoid = () => {
                 className=" w-[10rem] h-[3.7rem] border px-4 border-black"
               ></input>
               <Switch
-                checked={solenoid?.flush?.isPreWashOn === "T"}
+                checked={solenoid?.flush?.isPreFlushOn === "T"}
                 disabled={!isEdit}
                 onChange={(e) =>
                   setSolenoid((p) => {
                     return {
                       ...p,
-                      flush: { ...p?.flush, isPreWashOn: e ? "T" : "F" },
+                      flush: { ...p?.flush, isPreFlushOn: e ? "T" : "F" },
                     };
                   })
                 }
@@ -101,7 +101,7 @@ const Solenoid = () => {
             <div className=" flex items-center gap-x-[1.65rem]">
               <p className=" text-[1.2rem] font-black">Post Wash Trigger</p>
               <input
-                value={solenoid?.flush?.postWashTriggerTime}
+                value={solenoid?.flush?.postFlushTriggerTime}
                 disabled={!isEdit}
                 type="number"
                 onChange={(e) => {
@@ -110,7 +110,7 @@ const Solenoid = () => {
                       ...p,
                       flush: {
                         ...p?.flush,
-                        postWashTriggerTime: Number(e.target.value),
+                        postFlushTriggerTime: Number(e.target.value),
                       },
                     };
                   });
@@ -118,7 +118,7 @@ const Solenoid = () => {
                 className=" w-[10rem] h-[3.7rem] border px-4 border-black"
               ></input>
               <Switch
-                checked={solenoid?.flush?.isPostWashOn === "T"}
+                checked={solenoid?.flush?.isPostFlushOn === "T"}
                 disabled={!isEdit}
                 onChange={(e) =>
                   setSolenoid((p) => {
