@@ -7,7 +7,8 @@ const Solenoid = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [solenoid, setSolenoid] = useState<SolenoidData>({
     flush: {
-      isOn: "F",
+      isPreWashOn: "F",
+      isPostWashOn: "F",
       firstTriggerTime: 0,
       secondTriggerTime: 0,
     },
@@ -64,7 +65,7 @@ const Solenoid = () => {
           <h1 className=" text-[2rem] text-[#868686] font-black w-[6rem] ">
             Flush
           </h1>
-          <div className=" flex-1 pl-[10rem] flex items-center justify-between">
+          <div className=" flex-1 pl-[10rem] flex items-center justify-around">
             <div className=" flex items-center gap-x-[1.65rem]">
               <p className=" text-[1.2rem] font-black">Pre Wash Trigger</p>
               <input
@@ -84,6 +85,18 @@ const Solenoid = () => {
                 }}
                 className=" w-[10rem] h-[3.7rem] border px-4 border-black"
               ></input>
+              <Switch
+                checked={solenoid?.flush?.isPreWashOn === "T"}
+                disabled={!isEdit}
+                onChange={(e) =>
+                  setSolenoid((p) => {
+                    return {
+                      ...p,
+                      flush: { ...p?.flush, isPreWashOn: e ? "T" : "F" },
+                    };
+                  })
+                }
+              />
             </div>
             <div className=" flex items-center gap-x-[1.65rem]">
               <p className=" text-[1.2rem] font-black">Post Wash Trigger</p>
@@ -104,16 +117,19 @@ const Solenoid = () => {
                 }}
                 className=" w-[10rem] h-[3.7rem] border px-4 border-black"
               ></input>
+              <Switch
+                checked={solenoid?.flush?.isPostWashOn === "T"}
+                disabled={!isEdit}
+                onChange={(e) =>
+                  setSolenoid((p) => {
+                    return {
+                      ...p,
+                      flush: { ...p?.flush, isPostWatchOn: e ? "T" : "F" },
+                    };
+                  })
+                }
+              />
             </div>
-            <Switch
-              checked={solenoid?.flush?.isOn === "T"}
-              disabled={!isEdit}
-              onChange={(e) =>
-                setSolenoid((p) => {
-                  return { ...p, flush: { ...p?.flush, isOn: e ? "T" : "F" } };
-                })
-              }
-            />
           </div>
         </div>
         <div className=" w-full flex items-center bg-[#F5F5F5] py-[1.65rem] px-[3.25rem] opacity-20">

@@ -1,7 +1,8 @@
 import axios from "axios";
 import useSWR from "swr";
 export type FlushType = {
-  isOn:"T" |"F"
+  isPreWashOn:"T" |"F"
+  isPostWashOn:"T" |"F"
   firstTriggerTime:number
   secondTriggerTime:number
 }
@@ -18,7 +19,8 @@ export function useSolenoid() {
   const getMockData = async (url: string) => {
     return {
         flush: {
-            isOn: "T",
+          isPreWashOn: "F",
+          isPostWashOn:"F",
             firstTriggerTime: 10,
             secondTriggerTime: 20
         },
