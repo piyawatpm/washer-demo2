@@ -74,11 +74,25 @@ const PumpSetup = () => {
       handleCloseModal();
     }
   };
-  const handleTogglePump = async (targetBoolean: boolean, pump: PumpType) => {
+  const handleToggleFlush = async (targetBoolean: boolean, pump: PumpType) => {
     try {
       const res = await axios.post(`/api/v1/pump/${pump?.pumpNumber}`, {
         ...pump,
         isFlush: targetBoolean ? "T" : "F",
+      });
+      console.log(res);
+      await refetchPumpData();
+      message.success("success");
+    } catch (error) {
+      console.log(error);
+      message.error(error as string);
+    }
+  };
+  const handleTogglePurge = async (targetBoolean: boolean, pump: PumpType) => {
+    try {
+      const res = await axios.post(`/api/v1/pump/${pump?.pumpNumber}`, {
+        ...pump,
+        isPurge: targetBoolean ? "T" : "F",
       });
       console.log(res);
       await refetchPumpData();
@@ -236,14 +250,25 @@ const PumpSetup = () => {
                     <p className="  text-[.8rem] font-bold">ml per kg</p>
                   </div>
                 </div>
-                <div className=" flex flex-col items-center gap-y-3 mt-auto">
-                  <Switch
-                    onChange={(bool) => {
-                      handleTogglePump(bool, pump);
-                    }}
-                    checked={pump.isFlush === "T"}
-                  />
-                  <p className=" text-[.8rem] font-bold">Flush</p>
+                <div className=" flex flex-col gap-y-5 mt-auto">
+                  <div className=" flex flex-col items-center gap-y-3 mt-auto">
+                    <Switch
+                      onChange={(bool) => {
+                        handleToggleFlush(bool, pump);
+                      }}
+                      checked={pump.isFlush === "T"}
+                    />
+                    <p className=" text-[.8rem] font-bold">Flush</p>
+                  </div>
+                  <div className=" flex flex-col items-center gap-y-3 mt-auto">
+                    <Switch
+                      onChange={(bool) => {
+                        handleTogglePurge(bool, pump);
+                      }}
+                      checked={pump.isPurge === "T"}
+                    />
+                    <p className=" text-[.8rem] font-bold">Purge</p>
+                  </div>
                 </div>
               </div>
             </div>
