@@ -124,7 +124,7 @@ const Solenoid = () => {
                   setSolenoid((p) => {
                     return {
                       ...p,
-                      flush: { ...p?.flush, isPostWatchOn: e ? "T" : "F" },
+                      flush: { ...p?.flush, isPostFlushOn: e ? "T" : "F" },
                     };
                   })
                 }
